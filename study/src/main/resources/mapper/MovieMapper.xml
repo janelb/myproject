@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.libang.mapper.MovieMapper">
+
+        <select id="findMovieByKeys" resultType="com.libang.entity.Movie">
+              SELECT * from movie
+              <if test="movieName !=null and movieName != ''">
+                where movie_name like #{movieName}
+              </if>
+
+
+        </select>
+
+
+
+    </mapper>
