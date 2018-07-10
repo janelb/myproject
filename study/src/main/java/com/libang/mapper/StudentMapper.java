@@ -1,6 +1,7 @@
 package com.libang.mapper;
 
 import com.libang.entity.Student;
+import com.libang.entity.Type;
 import org.apache.ibatis.annotations.Param;
 
 import javax.swing.plaf.synth.SynthUI;
@@ -29,6 +30,8 @@ public interface StudentMapper {
 
 /*==============================================*/
         Student findSchoolById(Integer id);
+        Student findTypeById(Integer id);
+        int addBatch( @Param("typeList") List<Type> typeList);
 
 
 

@@ -2,6 +2,7 @@ package com.libang.test;
 
 import com.libang.entity.Student;
 
+import com.libang.entity.Type;
 import com.libang.mapper.StudentMapper;
 import com.libang.util.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,7 +131,32 @@ public class StudentMapperTestCase {
     public void testFindSchoolById(){
         Student student = studentMapper.findSchoolById(11);
         logger.debug("student:{}",student);
-
     }
+
+    /*一对多*/
+
+    @Test
+    public void testFindTypeById(){
+        Student student = studentMapper.findTypeById(11);
+        logger.debug("student:{}",student);
+    }
+
+    /*批量插入*/
+    @Test
+    public void testAddBatch(){
+        Type type = new Type();
+        type.setTypeName("aaa1");
+        Type type1 = new Type();
+        type1.setTypeName("bbbb");
+
+        List<Type> typeList = Arrays.asList(type,type1);
+
+        int count = studentMapper.addBatch(typeList);
+        sqlSession.commit();
+        logger.debug("count:{}",count);
+    }
+
+
+
 
 }

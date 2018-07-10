@@ -69,12 +69,17 @@
 
 
 <!--=====================================================================================================-->
+<resultMap id="baseMap" type="com.libang.entity.Student">
+    <id column="id" property="id"/>
+    <result column="stu_name" property="stuName"/>
+    <result column="school_id" property="schoolId"/>
+</resultMap>
+    
 
 
-    <resultMap id="studentMap" type="com.libang.entity.Student" >
-        <id column="id" property="id"/>
-        <result column="stu_name" property="stuName"/>
-        <result column="school_id" property="schoolId"/>
+    <!--一对一进行查询 或多对一-->
+
+    <resultMap id="studentMap" type="com.libang.entity.Student" extends="baseMap" >
         <association property="school" javaType="com.libang.entity.School">
             <id column="id" property="id"/>
             <result column="school_name" property="schoolName"/>
@@ -94,9 +99,43 @@
                     WHERE
                      student.id = #{id}
 
+    </select>
 
+
+    <!--一对多查询-->
+    <resultMap id="studentWithTypeMap" type="com.libang.entity.Student" extends="baseMap">
+        <collection property="typeList" ofType="com.libang.entity.Type">
+              <result column="type_name" property="typeName"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="findTypeById" resultMap="studentWithTypeMap">
+           SELECT
+                student.id,
+                student.stu_name,
+                school_id,
+                type.type_name
+            FROM
+                student
+            LEFT JOIN type_student ON student_id = student.id
+            LEFT JOIN type ON type_id = type.id
+            WHERE
+                student.id = #{id}
 
     </select>
+
+    <!--批量插入-->
+    <insert id="addBatch" parameterType="list">
+        insert into type(type_name)VALUES
+        <foreach collection="typeList" separator="," item="type">
+            (#{type.typeName})
+        </foreach>
+
+    </insert>
+
+
+
 
 
 </mapper>

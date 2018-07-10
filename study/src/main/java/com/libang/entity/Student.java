@@ -1,5 +1,7 @@
 package com.libang.entity;
 
+import java.util.List;
+
 /**
  * @author libang
  * @date 2018/7/9 20:35
@@ -11,6 +13,16 @@ public class Student {
     private Integer schoolId;
     private School school;
 
+    public List<Type> getTypeList() {
+        return typeList;
+    }
+
+    public void setTypeList(List<Type> typeList) {
+        this.typeList = typeList;
+    }
+
+    private List<Type> typeList;
+
     @Override
     public String toString() {
         return "Student{" +
@@ -18,6 +30,7 @@ public class Student {
                 ", stuName='" + stuName + '\'' +
                 ", schoolId=" + schoolId +
                 ", school=" + school +
+                ", typeList=" + typeList +
                 '}';
     }
 
