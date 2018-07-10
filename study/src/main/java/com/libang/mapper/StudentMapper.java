@@ -14,17 +14,21 @@ import java.util.Map;
 public interface StudentMapper {
     /**
      *新增学生
-     * @param student
+     * @param
      * @return
      */
-    int save(Student student);
+  /*  int save(Student student);
     List<Student> findAll();
     Student findById(Integer id);
     void delById(Integer id);
     void update(Student student);
 
     List<Student> findPage(@Param("start") Integer start,@Param("pageSize") Integer pageSize);
-    List<Student> findPageByMap(Map<String ,Integer> map);
+    List<Student> findPageByMap(Map<String ,Integer> map);*/
+
+
+/*==============================================*/
+        Student findSchoolById(Integer id);
 
 
 

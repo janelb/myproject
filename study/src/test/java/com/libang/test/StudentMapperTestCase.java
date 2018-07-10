@@ -41,7 +41,7 @@ public class StudentMapperTestCase {
      * 新增
      */
 
-    @Test
+   /* @Test
     public  void testSave(){
 
         Student student = new Student();
@@ -55,9 +55,9 @@ public class StudentMapperTestCase {
         int id = student.getId();
         logger.debug("新增加的id为:{}",id);
         sqlSession.commit();
-    }
+    }*/
 
-    @Test
+  /*  @Test
     public void findAll(){
         List<Student> studentList = studentMapper.findAll();
         for(Student student:studentList){
@@ -65,8 +65,8 @@ public class StudentMapperTestCase {
             logger.debug("所有学生:{}",student);
         }
     }
-
-    //进行分页
+*/
+    /*//进行分页
     @Test
     public void testFindpage(){
         List<Student> studentList = studentMapper.findPage(0,3);
@@ -74,11 +74,11 @@ public class StudentMapperTestCase {
 
             logger.debug("所有学生:{}",student);
         }
-    }
+    }*/
 
 
     //利用map集合进行多个参数的传参
-    @Test
+ /*   @Test
     public void testFindPageByMap(){
         Map<String ,Integer> maps = new HashMap<>();
         maps.put("start",0);
@@ -92,10 +92,10 @@ public class StudentMapperTestCase {
 
 
     }
+*/
 
 
-
-    @Test
+   /* @Test
     public void findById(){
         Student student = studentMapper.findById(8);
         logger.debug("id为8的学生信息为:{}",student);
@@ -107,7 +107,8 @@ public class StudentMapperTestCase {
         studentMapper.delById(5);
         sqlSession.commit();
 
-    }
+    }*/
+/*
 
     @Test
     public void testUpdate(){
@@ -116,6 +117,19 @@ public class StudentMapperTestCase {
 
         studentMapper.update(student);
         sqlSession.commit();
+    }
+*/
+
+
+/*一对多，多对一，多对多关系===========================================================================*/
+
+
+    /*一对一进行查询*/
+    @Test
+    public void testFindSchoolById(){
+        Student student = studentMapper.findSchoolById(11);
+        logger.debug("student:{}",student);
+
     }
 
 }

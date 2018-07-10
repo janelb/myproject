@@ -1,7 +1,8 @@
 package com.libang.test;
 
 import com.libang.entity.Student;
-import com.libang.entity.com.libang.utils.MybatisUtils;
+
+import com.libang.util.MybatisUtils;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -49,19 +50,19 @@ public class StudentTestCase {
      */
 
 
-    @Test
+    /*@Test
     public void testSave() throws IOException {
 
-       /* Reader reader = Resources.getResourceAsReader("mybatis.xml");
+       *//* Reader reader = Resources.getResourceAsReader("mybatis.xml");
         System.out.println("你好");
 
       SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
 
 
-       SqlSession sqlSession = sqlSessionFactory.openSession(true);*/
+       SqlSession sqlSession = sqlSessionFactory.openSession(true);*//*
 
-       /* SqlSession sqlSession = MybatisUtils.getSqlSession();
-*/
+       *//* SqlSession sqlSession = MybatisUtils.getSqlSession();
+*//*
         Student student = new Student();
         student.setStuName("tom");
         student.setAge(23);
@@ -72,64 +73,70 @@ public class StudentTestCase {
 
         sqlSession.commit();
         Assert.assertEquals(1, res);
-       /* sqlSession.close();*/
-    }
+       *//* sqlSession.close();*//*
+    }*/
 
     /**
      * 查询所有
      */
-    @Test
-    public void testFindAll() {
-        /*SqlSession sqlSession = MybatisUtils.getSqlSession();*/
+   /* @Test*/
+    /*public void testFindAll() {
+        *//*SqlSession sqlSession = MybatisUtils.getSqlSession();*//*
         List<Student> studentList = sqlSession.selectList("com.libang.mapper.StudentMapper.findAll");
         for (Student student : studentList) {
             System.out.println(student);
         }
-       /* sqlSession.close();*/
+       *//* sqlSession.close();*//*
 
-    }
+    }*/
 
     /**
      * 根据Id进行查询
      */
-    @Test
+    /*@Test
     public void testFindOne() {
-        /*SqlSession sqlSession = MybatisUtils.getSqlSession();*/
+        *//*SqlSession sqlSession = MybatisUtils.getSqlSession();*//*
         Student student = sqlSession.selectOne("com.libang.StudentMapper.findByid", 2);
         System.out.println(student);
-       /* sqlSession.close();*/
-    }
+       *//* sqlSession.close();*//*
+    }*/
 
     /**
      * 根据id进行删除
      */
-    @Test
+  /*  @Test
     public void testDelId() {
-      /*  SqlSession sqlSession = MybatisUtils.getSqlSession(true);*/
+      *//*  SqlSession sqlSession = MybatisUtils.getSqlSession(true);*//*
         Student student = sqlSession.selectOne("com.libang.StudentMapper.findById",2);
         sqlSession.delete("com.libang.StudentMapper.delById", 2);
         sqlSession.commit();
-        /*sqlSession.close();*/
+        *//*sqlSession.close();*//*
     }
-
+*/
     /**
      * 根据id进行删除
      */
-    @Test
+   /* @Test
     public void testUpdate() {
-        /*SqlSession sqlSession = MybatisUtils.getSqlSession(true);*/
+        *//*SqlSession sqlSession = MybatisUtils.getSqlSession(true);*//*
         Student student = sqlSession.selectOne("com.libang.StudentMapper.findById", 2);
 
         student.setStuName("jack");
         student.setAge(34);
         sqlSession.update("com.libang.StudentMapper.update", 2);
-        /*
+        *//*
         自动提交事务
-        * */
+        * *//*
         sqlSession.commit();
-        /*sqlSession.close();*/
+        *//*sqlSession.close();*//*
 
     }
+*/
+
+
+
+
+
 
 
 }

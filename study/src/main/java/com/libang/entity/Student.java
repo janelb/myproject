@@ -4,18 +4,29 @@ package com.libang.entity;
  * @author libang
  * @date 2018/7/9 20:35
  */
-public class Student{
+public class Student {
+
     private Integer id;
     private String stuName;
-    private Integer age;
+    private Integer schoolId;
+    private School school;
 
     @Override
     public String toString() {
         return "Student{" +
                 "id=" + id +
                 ", stuName='" + stuName + '\'' +
-                ", age=" + age +
+                ", schoolId=" + schoolId +
+                ", school=" + school +
                 '}';
+    }
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
     }
 
     public Integer getId() {
@@ -34,11 +45,11 @@ public class Student{
         this.stuName = stuName;
     }
 
-    public Integer getAge() {
-        return age;
+    public Integer getSchoolId() {
+        return schoolId;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
     }
 }

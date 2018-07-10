@@ -6,70 +6,97 @@
 
 
     <!--插入信息-->
- <!--   <insert id="save" parameterType="student" >
+    <!--   <insert id="save" parameterType="student" >
+           insert into student (stu_name,age) values (#{stuName},#{age})
+       </insert>
+       -->
+    <!--<insert id="save" parameterType="com.libang.entity.Student" useGeneratedKeys="true" keyProperty="id">
         insert into student (stu_name,age) values (#{stuName},#{age})
     </insert>
-    -->
-    <insert id="save" parameterType="com.libang.entity.Student"  useGeneratedKeys="true" keyProperty="id">
-        insert into student (stu_name,age) values (#{stuName},#{age})
-    </insert>
 
 
-
-    <!--查询所有信息-->
+    &lt;!&ndash;查询所有信息&ndash;&gt;
     <select id="findAll" resultType="com.libang.entity.Student">
 
         select id, stu_name ,age from student
     </select>
-    
-<!--根据Id进行查询-->
+
+    &lt;!&ndash;根据Id进行查询&ndash;&gt;
     <select id="findById" resultType="com.libang.entity.Student">
         select id ,stu_name ,age from student where id = #{id}
     </select>
 
-    <!--分页查询-->
+    &lt;!&ndash;分页查询&ndash;&gt;
     <select id="findPage" resultType="com.libang.entity.Student">
 
         select id ,stu_name,age from student limit #{start} ,#{pageSize};
 
-    </select>
-
+    </select>-->
 
 
     <!--手动进行提交：重点-->
 
-    <resultMap id="StudentMap" type="com.libang.entity.Student">
+  <!--  <resultMap id="StudentMap" type="com.libang.entity.Student">
         <id column="id" property="id"/>
         <result column="stu_name" property="stuName"/>
-        <result column="age"  property="age"/>
+        <result column="age" property="age"/>
 
     </resultMap>
 
-    <select id="findById" resultMap="StudentMap">
+   <select id="findById" resultMap="StudentMap">
         select id ,stu_name ,age from student where id = #{id}
-     </select>
+     </select>-->
 
 
-
-    
-    <!--利用map集合进行查询-->
+<!--
+    &lt;!&ndash;利用map集合进行查询&ndash;&gt;
     <select id="findPageByMap" parameterType="map" resultType="com.libang.entity.Student">
 
       select id ,stu_name,age from student limit #{start} ,#{pageSize};
 
     </select>
 
-    <!--根据id进行删除-->
-    <delete id="delById" >
+    &lt;!&ndash;根据id进行删除&ndash;&gt;
+    <delete id="delById">
         delete from student where id =#{id}
     </delete>
 
-    <!--根据id进行更新数据-->
+    &lt;!&ndash;根据id进行更新数据&ndash;&gt;
     <update id="update" parameterType="com.libang.entity.Student">
         update student set stu_name = #{stuName},age=#{age} where id =#{id}
     </update>
+-->
 
 
+<!--=====================================================================================================-->
+
+
+    <resultMap id="studentMap" type="com.libang.entity.Student" >
+        <id column="id" property="id"/>
+        <result column="stu_name" property="stuName"/>
+        <result column="school_id" property="schoolId"/>
+        <association property="school" javaType="com.libang.entity.School">
+            <id column="id" property="id"/>
+            <result column="school_name" property="schoolName"/>
+        </association>
+    </resultMap>
+
+    <select id="findSchoolById" resultMap="studentMap" parameterType="int">
+
+                    SELECT
+                        student.id,
+                        stu_name,
+                        school_id,
+                        school_name
+                    FROM
+                        student
+                    INNER JOIN school ON school_id = school.id
+                    WHERE
+                     student.id = #{id}
+
+
+
+    </select>
 
 
 </mapper>
