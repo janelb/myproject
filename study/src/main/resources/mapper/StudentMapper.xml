@@ -4,10 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.libang.mapper.StudentMapper">
 
+
     <!--插入信息-->
-    <insert id="save" parameterType="student">
+ <!--   <insert id="save" parameterType="student" >
         insert into student (stu_name,age) values (#{stuName},#{age})
     </insert>
+    -->
+    <insert id="save" parameterType="com.libang.entity.Student"  useGeneratedKeys="true" keyProperty="id">
+        insert into student (stu_name,age) values (#{stuName},#{age})
+    </insert>
+
+
 
     <!--查询所有信息-->
     <select id="findAll" resultType="com.libang.entity.Student">
@@ -20,8 +27,40 @@
         select id ,stu_name ,age from student where id = #{id}
     </select>
 
+    <!--分页查询-->
+    <select id="findPage" resultType="com.libang.entity.Student">
+
+        select id ,stu_name,age from student limit #{start} ,#{pageSize};
+
+    </select>
+
+
+
+    <!--手动进行提交：重点-->
+
+    <resultMap id="StudentMap" type="com.libang.entity.Student">
+        <id column="id" property="id"/>
+        <result column="stu_name" property="stuName"/>
+        <result column="age"  property="age"/>
+
+    </resultMap>
+
+    <select id="findById" resultMap="StudentMap">
+        select id ,stu_name ,age from student where id = #{id}
+     </select>
+
+
+
+    
+    <!--利用map集合进行查询-->
+    <select id="findPageByMap" parameterType="map" resultType="com.libang.entity.Student">
+
+      select id ,stu_name,age from student limit #{start} ,#{pageSize};
+
+    </select>
+
     <!--根据id进行删除-->
-    <delete id="delById">
+    <delete id="delById" >
         delete from student where id =#{id}
     </delete>
 
