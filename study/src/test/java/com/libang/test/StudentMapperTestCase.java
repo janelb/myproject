@@ -1,8 +1,9 @@
 package com.libang.test;
 
 import com.libang.entity.Student;
-import com.libang.entity.com.libang.utils.MybatisUtils;
+
 import com.libang.mapper.StudentMapper;
+import com.libang.util.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.After;
 import org.junit.Before;
