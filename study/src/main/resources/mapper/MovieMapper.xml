@@ -9,9 +9,33 @@
               <if test="movieName !=null and movieName != ''">
                 where movie_name like #{movieName}
               </if>
-
-
         </select>
+
+
+    <!--多个参数进行查询-->
+    <select id="findMovieByPage" resultType="com.libang.entity.Movie" parameterType="map">
+        SELECT * FROM movie
+        <where>
+            <if test="movieName !=null and movieName != ''">
+                 movie_name like #{movieName}
+            </if>
+            <if test="movieName !=null and movieName != ''">
+                and derictor_name like #{derictorName}
+            </if>
+
+        </where>
+
+    </select>
+
+
+    <select id="findById" resultType="com.libang.entity.Movie" >
+            SELECT*from movie where id in
+            <foreach collection="idList" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+    </select>
+
+
 
 
 

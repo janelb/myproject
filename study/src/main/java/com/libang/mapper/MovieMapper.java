@@ -4,6 +4,7 @@ import com.libang.entity.Movie;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author libang
@@ -17,6 +18,7 @@ public interface MovieMapper {
      * @return
      */
     List<Movie> findMovieByKeys(@Param("movieName") String movieName);
-
+    List<Movie> findMovieByPage(Map<String ,Object> queryMap);
+    List<Movie> findById(@Param("idList") List<Integer> idList);
 
 }

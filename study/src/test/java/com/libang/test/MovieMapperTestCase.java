@@ -10,7 +10,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author libang
@@ -36,6 +39,26 @@ public class MovieMapperTestCase {
         /*String movieName = "%西游%";*/
         List<Movie> movieList = movieMapper.findMovieByKeys( "%西游%");
         logger.debug("电影数量:{}",movieList.size());
+    }
+
+
+    @Test
+    public void testFindMovieByPage(){
+        Map<String,Object> maps = new HashMap<>();
+       /* maps.put("movieName","%西游%");*/
+        maps.put("derictorName","%tom%");
+        List< Movie> movieList = movieMapper.findMovieByPage(maps);
+
+        logger.debug("movieList:{}",movieList.size());
+
+    }
+
+    @Test
+    public void testFindById(){
+        List<Integer> idList = Arrays.asList(23,24,25);
+        List<Movie> movieList = movieMapper.findById(idList);
+        logger.debug("movieList:{}",movieList.size());
+
     }
 
 
