@@ -109,7 +109,7 @@
         </collection>
     </resultMap>
 
-
+  
     <select id="findTypeById" resultMap="studentWithTypeMap">
            SELECT
                 student.id,

@@ -49,13 +49,13 @@ public class MovieMapperTestCase {
         maps.put("derictorName","%tom%");
         List< Movie> movieList = movieMapper.findMovieByPage(maps);
 
-        logger.debug("movieList:{}",movieList.size());
+        logger.debug("电影个数:{}",movieList.size());
 
     }
 
     @Test
     public void testFindById(){
-        List<Integer> idList = Arrays.asList(23,24,25);
+        List<Integer> idList = Arrays.asList(23,24,28);
         List<Movie> movieList = movieMapper.findById(idList);
         logger.debug("movieList:{}",movieList.size());
 

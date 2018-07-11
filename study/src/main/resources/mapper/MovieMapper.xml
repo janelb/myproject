@@ -19,7 +19,7 @@
             <if test="movieName !=null and movieName != ''">
                  movie_name like #{movieName}
             </if>
-            <if test="movieName !=null and movieName != ''">
+            <if test="derictorName !=null and derictorName != ''">
                 and derictor_name like #{derictorName}
             </if>
 
@@ -34,9 +34,4 @@
                 #{id}
             </foreach>
     </select>
-
-
-
-
-
     </mapper>

@@ -18,7 +18,7 @@ public interface MovieMapper {
      * @return
      */
     List<Movie> findMovieByKeys(@Param("movieName") String movieName);
-    List<Movie> findMovieByPage(Map<String ,Object> queryMap);
+    List<Movie> findMovieByPage(Map<String ,Object> maps);
     List<Movie> findById(@Param("idList") List<Integer> idList);
 
 }
