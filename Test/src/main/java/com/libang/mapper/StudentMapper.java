@@ -2,6 +2,8 @@ package com.libang.mapper;
 
 import com.libang.entity.Student;
 import com.libang.entity.Type;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -17,10 +19,12 @@ public interface StudentMapper {
 
             List<Student> findAll();
 
-            /*@Select("SELECT id, stu_name ,school_id from student  where id = #{id}")*/
+            @Select("SELECT id, stu_name ,school_id from student  where id = #{id}")
             Student findById(Integer id);
 
 
+            @Insert("INSERT into student (stu_name,school_id)values(#{stuName},#{schoolId})")
+            @Options(useGeneratedKeys = true ,keyProperty = "id")
             int addStudent(Student student);
             List<Student> findByKeys(@Param("stuName") String stuName);
 

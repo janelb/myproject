@@ -22,8 +22,8 @@
 
 
    <mappers>
-        <mapper resource="mapper/StudentMapper.xml"/>
-       <!--<mapper class="com.libang.mapper.StudentMapper"/>-->
+        <!--<mapper resource="mapper/StudentMapper.xml"/>-->
+       <mapper class="com.libang.mapper.StudentMapper"/>
    </mappers>
 
 
