@@ -97,7 +97,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.libang.entity.Student">
+  <insert id="insert" parameterType="com.libang.entity.Student"  useGeneratedKeys="true" keyProperty="id">
     insert into student (id, stu_name, school_id
       )
     values (#{id,jdbcType=INTEGER}, #{stuName,jdbcType=VARCHAR}, #{schoolId,jdbcType=INTEGER}

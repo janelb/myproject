@@ -50,9 +50,19 @@ public class StudentMapperTestCase {
         }
     }
 
+    /*新增*/
     @Test
     public void  testAddStudent(){
-        
+        Student student = new Student();
+        student.setStuName("赵大山");
+        student.setSchoolId(2);
+        int res = studentMapper.insert(student);
+        sqlSession.commit();
+        System.out.println("影响行数:" + res);
+
+        int code = student.getId();
+        System.out.println("id为：" + code);
+
 
     }
 
