@@ -46,10 +46,27 @@ public class StudentMapperTestCase {
         }
     }
 
+
+    /**
+     * 使用缓存
+     */
     @Test
     public void testFindById(){
         Student student = studentMapper.findById(12);
         logger.debug("student:{}",student);
+
+        //只有把的哥关闭才能存入缓存
+        sqlSession.close();
+
+        SqlSession sqlSession2 = MybatisUtils.getSqlSession();
+        StudentMapper studentMapper2 = sqlSession2.getMapper(StudentMapper.class);
+        Student student2 = studentMapper2.findById(12);
+        logger.debug("student:{}",student2);
+        sqlSession2.close();
+
+
+
+
     }
 
 
