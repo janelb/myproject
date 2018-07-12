@@ -13,7 +13,7 @@
         MyBatis3Simple 生成简单的CRUD语句
         MyBatis3 生成带Example的CRUD语句
     -->
-    <context id="myConfig" targetRuntime="MyBatis3Simple">
+    <context id="myConfig" targetRuntime="MyBatis3">
 
 
         <!--去掉自动生成注释-->

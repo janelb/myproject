@@ -23,10 +23,7 @@
 
 
    <mappers>
-        <!--<mapper resource="mapper/StudentMapper.xml"/>-->
-       <mapper resource="mapper/SchoolMapper.xml"/>
-       <mapper resource="mapper/TypeMapper.xml"/>
-       <mapper class="com.libang.mapper.StudentMapper"/>
+    <mapper resource="mapper/StudentMapper.xml"/>
 
    </mappers>
 

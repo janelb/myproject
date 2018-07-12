@@ -11,6 +11,15 @@ public class Student {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", stuName='" + stuName + '\'' +
+                ", schoolId=" + schoolId +
+                '}';
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
