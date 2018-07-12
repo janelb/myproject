@@ -146,11 +146,15 @@ public class StudentMapperTestCase {
         }
     }
 
+
+
     @Test
     public void testFindByStudentId(){
         Student student = studentMapper.findByStudentId(12);
         logger.debug("学生为:{}",student);
     }
+
+
 
     @Test
     public void testFindTypeByStudentId(){

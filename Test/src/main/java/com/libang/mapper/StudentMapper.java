@@ -2,10 +2,7 @@ package com.libang.mapper;
 
 import com.libang.entity.Student;
 import com.libang.entity.Type;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -67,16 +64,46 @@ public interface StudentMapper {
 
             /**
              * 一对一或多对一查询
+             * 根据学生的i查询对应的学校
              * @param id
              * @return
              */
+
+            @Select("SELECT id, stu_name ,school_id from student  where .student.id = #{id}")
+            @Results(value={
+                    @Result(column = "id",property = "id"),
+                    @Result(column = "stu_name", property = "stuName"),
+                    @Result(column = "school_id",property = "schoolId"),
+                    @Result(column = "school_id" ,property = "school" ,one = @One(
+                        select = "com.libang.mapper.SchoolMapper.findById"
+
+                    ))
+            })
             Student findByStudentId(Integer id);
 
             /**
              * 一对多查询
+             * 根据学生id查询对应类型
              * @param id
              */
+
+
+            @Select("SELECT id, stu_name ,school_id from student  where .student.id = #{id}")
+            @Results(value = {
+                    @Result(column = "id",property = "id"),
+                    @Result(column = "stu_name", property = "stuName"),
+                    @Result(column = "school_id",property = "schoolId"),
+                    @Result(column = "id",property = "typeList", many = @Many(
+                            select = "com.libang.mapper.TypeMapper.findByStudentId"
+
+                    ))
+
+            })
             Student findTypeByStudentId(Integer id);
+
+
+
+
 
             /**
              * 进行批量插入

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.libang.mapper.TypeMapper">
+
+    <select id="findByStudentId" resultType="com.libang.entity.Type" parameterType="int">
+
+        SELECT*from type where id in (SELECT type_id from type_student where student_id =#{id} )
+    </select>
+
+
+</mapper>
