@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.libang.mapper.StudentMapper">
+
+    <select id="findAll" resultType="com.libang.entity.Student">
+               SELECT*from student
+    </select>
+
+
+    <!--进行手动提交事务：重点-->
+    <resultMap id="baseMap" type="com.libang.entity.Student">
+        <id column="id" property="id"/>
+        <result column="stu_name" property="stuName"/>
+        <result column="school_id" property="schoolId"/>
+    </resultMap>
+
+    <select id="findById" resultMap="baseMap">
+        SELECT id, stu_name ,school_id from student  where id = #{id}
+    </select>
+
+
+
+
+
+
+    <insert id="addStudent" parameterType="com.libang.entity.Student" useGeneratedKeys="true" keyProperty="id">
+        INSERT into student (stu_name,school_id)values(#{stuName},#{schoolId});
+    </insert>
+
+    <select id="findByKeys" resultType="com.libang.entity.Student">
+          SELECT id ,stu_name,school_id from student where stu_name like #{stuName}
+     </select>
+
+    <update id="update" parameterType="com.libang.entity.Student">
+        UPDATE student set stu_name = #{stuName} where id =#{id}
+    </update>
+
+
+    <!--多个参数查询，使用map集合 -->
+
+    <select id="findByPage" resultType="com.libang.entity.Student" parameterType="map">
+            SELECT id ,stu_name,school_id from student
+            <where>
+
+                <if test="stuName !=null and stuName !=''" >
+                     stu_name like #{stuName}
+                </if>
+                <if test="schoolId !=null and schoolId !=''" >
+                    and school_id = #{schoolId}
+                </if>
+
+            </where>
+
+    </select>
+
+    <!--多个参数查询,使用@Param-->
+    <select id="findByParam" resultType="com.libang.entity.Student">
+        SELECT id ,stu_name,school_id from student
+        <where>
+
+            <if test="stuName !=null and stuName !=''" >
+                stu_name like #{stuName}
+            </if>
+            <if test="schoolId !=null and schoolId !=''" >
+                and school_id = #{schoolId}
+            </if>
+
+        </where>
+
+    </select>
+
+
+    <!--分页查询-->
+    <select id="findPage" resultType="com.libang.entity.Student">
+
+        SELECT*from student limit #{start},#{pageSize}
+
+    </select>
+
+
+    <!--查询指定的多个数据 利用了手动提交事务处理-->
+    <select id="findByIds" resultMap="baseMap">
+
+        SELECT id ,stu_name,school_id from student where id in
+        <foreach collection="idList" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+
+
+
+    <!--一对一或多对一查询-->
+    <resultMap id="studentWithMap" type="com.libang.entity.Student" extends="baseMap">
+        <association property="school" javaType="com.libang.entity.School">
+            <result column="school_name" property="schoolName"/>
+        </association>
+            </resultMap>
+
+    <select id="findByStudentId" resultMap="studentWithMap" parameterType="int">
+                SELECT
+                    student.id,
+                    stu_name,
+                    school_id,
+                    school_name
+                FROM
+                    student
+                INNER JOIN school ON school_id = school.id
+                WHERE
+                    student.id =#{id}
+
+    </select>
+
+
+    <!--一对多查询-->
+    <resultMap id="studentMap" type="com.libang.entity.Student" extends="baseMap">
+        <collection property="typeList" ofType="com.libang.entity.Type">
+            <result column="type_name" property="typeName"/>
+        </collection>
+    </resultMap>
+
+    <select id="findTypeByStudentId" resultMap="studentMap">
+            SELECT
+                student.id,
+                student.stu_name,
+                school_id,
+                type.type_name
+            FROM
+                student
+            left JOIN type_student ON student.id = student_id
+            left JOIN type ON type.id = type_id
+            WHERE
+	      student.id =#{id}
+
+    </select>
+
+
+        <!--进行批量插入-->
+    <insert id="addBatch" parameterType="list">
+
+          INSERT into type (type_name)VALUES
+
+          <foreach collection="typeList" separator="," item="type">
+
+              (#{type.typeName})
+          </foreach>
+
+    </insert>
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
