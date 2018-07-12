@@ -1,12 +1,13 @@
 package com.libang.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author libang
  * @date 2018/7/11 11:05
  */
-public class Student{
+public class Student implements Serializable {
 
     private Integer id;
     private String stuName;

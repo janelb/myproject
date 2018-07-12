@@ -3,6 +3,7 @@ package com.libang.mapper;
 import com.libang.entity.Student;
 import com.libang.entity.Type;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,11 @@ public interface StudentMapper {
 
 
             List<Student> findAll();
+
+            /*@Select("SELECT id, stu_name ,school_id from student  where id = #{id}")*/
             Student findById(Integer id);
+
+
             int addStudent(Student student);
             List<Student> findByKeys(@Param("stuName") String stuName);
 
