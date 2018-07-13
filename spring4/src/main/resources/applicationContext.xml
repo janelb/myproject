@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--scope表示创建的是否是单例 默认为单例（singleton）  prototype表示不是单例-->
+    <!-- lazy-init 为true是表示调用该方法时创建对象 false默认启动时创建对象 默认为false-->
+
+        <bean id="userDao" class="com.libang.dao.UserDao" lazy-init="true" destroy-method="destory" init-method="init"/>
+
+
+</beans>

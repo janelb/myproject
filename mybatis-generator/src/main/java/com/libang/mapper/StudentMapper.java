@@ -12,7 +12,7 @@ public interface StudentMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-
+    /*修改了备注*/
     int insert(Student record);
 
     int insertSelective(Student record);
