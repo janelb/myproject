@@ -115,10 +115,25 @@ public class StudentMapperTestCase {
         PageInfo<Student> pageInfo = new PageInfo<>(studentList);
         System.out.println(pageInfo.getPageNum());
         System.out.println(pageInfo.getPageSize());
-  }
+    }
+
+      /*排序*/
+    @Test
+      public void testDesc(){
+
+          StudentExample studentExample = new StudentExample();
+          //有选择的条件的查询
+          studentExample.or().andIdEqualTo(12);
+          studentExample.or().andIdEqualTo(14);
+          List<Student> studentList = studentMapper.selectByExample(studentExample);
+          for(Student student : studentList){
+              System.out.println(student);
+          }
 
 
-  
+      }
+
+
 
 
 }
