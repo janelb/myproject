@@ -148,5 +148,19 @@ public class StudentMapperTestCase {
 
 
 
+    /*插入*/
+    @Test
+    public void testInsert(){
+
+
+        Student student = new Student();
+        student.setStuName("aaa");
+        studentMapper.insertSelective(student);
+        sqlSession.commit();
+
+    }
+
+
+
 
 }

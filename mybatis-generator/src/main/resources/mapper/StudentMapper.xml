@@ -6,6 +6,7 @@
     <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
   </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -35,6 +36,8 @@
       </foreach>
     </where>
   </sql>
+
+
   <sql id="Update_By_Example_Where_Clause">
     <where>
       <foreach collection="example.oredCriteria" item="criteria" separator="or">
@@ -64,9 +67,12 @@
       </foreach>
     </where>
   </sql>
+
   <sql id="Base_Column_List">
     id, stu_name, school_id
   </sql>
+
+  <!--根据例子（属性方法名条件）进行查询-->
   <select id="selectByExample" parameterType="com.libang.entity.StudentExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -81,28 +87,37 @@
       order by ${orderByClause}
     </if>
   </select>
+
+<!--根据主键进行查询-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from student
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+<!--根据主键进行删除-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from student
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <!--跟据什么方法名删除-->
   <delete id="deleteByExample" parameterType="com.libang.entity.StudentExample">
     delete from student
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
+  <!--直接新增-->
   <insert id="insert" parameterType="com.libang.entity.Student"  useGeneratedKeys="true" keyProperty="id">
     insert into student (id, stu_name, school_id
       )
     values (#{id,jdbcType=INTEGER}, #{stuName,jdbcType=VARCHAR}, #{schoolId,jdbcType=INTEGER}
       )
   </insert>
+  <!--进行灵活有选择的插入,如果不设置则会成NUll-->
   <insert id="insertSelective" parameterType="com.libang.entity.Student">
     insert into student
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -128,12 +143,16 @@
       </if>
     </trim>
   </insert>
+
+  <!--统计所有学生的数量-->
   <select id="countByExample" parameterType="com.libang.entity.StudentExample" resultType="java.lang.Long">
     select count(*) from student
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
+  <!--通过对象有选择的跟新-->
   <update id="updateByExampleSelective" parameterType="map">
     update student
     <set>
@@ -151,6 +170,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+  <!--通过队像例子进行更新-->
   <update id="updateByExample" parameterType="map">
     update student
     set id = #{record.id,jdbcType=INTEGER},
@@ -161,7 +182,7 @@
     </if>
   </update>
 
-
+<!--通过主键进行有选择的更新-->
   <update id="updateByPrimaryKeySelective" parameterType="com.libang.entity.Student">
     update student
     <set>
@@ -174,6 +195,9 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+<!--通过主键进行跟新-->
   <update id="updateByPrimaryKey" parameterType="com.libang.entity.Student">
     update student
     set stu_name = #{stuName,jdbcType=VARCHAR},
