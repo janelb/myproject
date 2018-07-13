@@ -11,7 +11,7 @@
         id : 自定义
         targerRuntime:有MyBatis3Simple 和 MyBatis3
         MyBatis3Simple 生成简单的CRUD语句
-        MyBatis3 生成带Example的CRUD语句
+        MyBatis3 生成带Example的CRUD语句，常使用这个
     -->
     <context id="myConfig" targetRuntime="MyBatis3">
 

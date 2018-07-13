@@ -115,9 +115,10 @@ public class StudentMapperTestCase {
         PageInfo<Student> pageInfo = new PageInfo<>(studentList);
         System.out.println(pageInfo.getPageNum());
         System.out.println(pageInfo.getPageSize());
-
   }
 
+
+  
 
 
 }
