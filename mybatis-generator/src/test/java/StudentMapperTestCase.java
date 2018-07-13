@@ -117,7 +117,7 @@ public class StudentMapperTestCase {
         System.out.println(pageInfo.getPageSize());
     }
 
-      /*排序*/
+      /* 有选择的条件的查询*/
     @Test
       public void testDesc(){
 
@@ -129,9 +129,22 @@ public class StudentMapperTestCase {
           for(Student student : studentList){
               System.out.println(student);
           }
+    }
 
+    /*排序*/
+    @Test
+    public void testOrderBy(){
+        StudentExample studentExample =new StudentExample();
+        //根据id进行排序
+        studentExample.setOrderByClause("id desc");
+        //取出重复
+        studentExample.setDistinct(true);
+        List<Student> studentList = studentMapper.selectByExample(studentExample);
+        for(Student student : studentList){
+            System.out.println(student);
+        }
 
-      }
+    }
 
 
 
