@@ -6,7 +6,7 @@ package com.libang.dao;
  */
 public class UserDao {
 
-    public UserDao(){
+    /*public UserDao(){
         System.out.println("create...");
 
     }
@@ -18,7 +18,7 @@ public class UserDao {
 
     public void destory(){
         System.out.println("destory..");
-    }
+    }*/
 
     public void save(){
         System.out.println("create...");

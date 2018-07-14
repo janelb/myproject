@@ -15,13 +15,13 @@ public class SpringTestCase {
         /*接口指向实现类对象*/
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
     /*    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");*/
-        UserDao userDao = (UserDao) context.getBean("userDao");
+       /* UserDao userDao = (UserDao) context.getBean("userDao");*/
 
         /*spring容器默认创建是单例*/
       /*  UserDao userDao1 = (UserDao) context.getBean("userDao");*/
        /* System.out.println(userDao == userDao1);*/
 
-        userDao.save();
+       /* userDao.save();*/
 
         /*关闭容器*/
         /*context.close();*/

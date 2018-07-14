@@ -1,13 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:P="http://www.springframework.org/schema/c"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--scope表示创建的是否是单例 默认为单例（singleton）  prototype表示不是单例-->
     <!-- lazy-init 为true是表示调用该方法时创建对象 false默认启动时创建对象 默认为false-->
 
-        <bean id="userDao" class="com.libang.dao.UserDao" lazy-init="true" destroy-method="destory" init-method="init"/>
+    <!--    <bean id="userDao" class="com.libang.dao.UserDao" lazy-init="true" destroy-method="destory" init-method="init"/>-->
+
+<!--=================================注入方法=======================================================-->
+
+    <bean id="userDao" class="com.libang.dao.UserDao"/>
+
+    <!--使用set方法注入第一种类型，常用方法-->
+    <!--<bean id="userService" class="com.libang.service.UserService">
+        &lt;!&ndash;name属性为：被注入对象setter方法名去掉set首字母变小写，ref属性是：注入对象的id名&ndash;&gt;
+        <property name="userDao" ref="userDao"/>
+    </bean>-->
+
+    <!--第二种类型-->
+   <!-- <bean id="userService" class="com.libang.service.UserService">
+        <property name="userDao">
+            <ref bean="userDao"/>
+        </property>
+    </bean>-->
+
+    <!--第三种类型-->
+    <!--此方法可以不用单独把注入对象放入容器中，可以自己创建，但是是局部的，不推荐使用-->
+    <!--   <bean id="userService" class="com.libang.service.UserService">
+        <property name="userDao">
+           <bean class="com.libang.dao.UserDao"/>
+        </property>
+    </bean>-->
+
+    <!--第三种类型-->
+       <bean id="userService" class="com.libang.service.UserService"  p:userDao-ref="userDao"/>
+
+
+
+
+
 
 
 </beans>
