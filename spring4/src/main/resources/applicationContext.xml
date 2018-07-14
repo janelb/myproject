@@ -10,18 +10,18 @@
 
     <!--    <bean id="userDao" class="com.libang.dao.UserDao" lazy-init="true" destroy-method="destory" init-method="init"/>-->
 
-<!--=================================注入方法=======================================================-->
+<!--=================================set注入方法=======================================================-->
     <!--当bean有很多依赖时，构造方法的参数列表会很长。
         如果对象有多个构造方法，那么构造方法的代码量会增加
         如果构造方法有两个以上参数类型相同时，将很难确定参数的用途-->
 
     <bean id="userDao" class="com.libang.dao.UserDao"/>
-
     <!--使用set方法注入第一种类型，常用方法-->
     <bean id="userService" class="com.libang.service.UserService">
         <!--name属性为：被注入对象setter方法名去掉set首字母变小写，ref属性是：注入对象的id名-->
         <property name="userDao" ref="userDao"/>
     </bean>
+
 
     <!--第二种类型-->
    <!-- <bean id="userService" class="com.libang.service.UserService">
@@ -82,6 +82,12 @@
         • 其中byName和byType方式都是基于set注入方式进行的-->
 
     <!-- <bean id="userService" class="com.libang.service.UserService" autowire="byType"/>-->
+
+
+
+
+
+
 
     <!--========================基本数据类型及集合的注入=====================================-->
 
