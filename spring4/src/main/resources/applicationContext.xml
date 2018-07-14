@@ -12,7 +12,7 @@
 
 <!--=================================注入方法=======================================================-->
 
-    <bean id="userDao" class="com.libang.dao.UserDao"/>
+    <!--<bean id="userDao" class="com.libang.dao.UserDao"/>-->
 
     <!--使用set方法注入第一种类型，常用方法-->
     <!--<bean id="userService" class="com.libang.service.UserService">
@@ -36,7 +36,48 @@
     </bean>-->
 
     <!--第三种类型-->
-       <bean id="userService" class="com.libang.service.UserService"  p:userDao-ref="userDao"/>
+     <!--  <bean id="userService" class="com.libang.service.UserService"  p:userDao-ref="userDao"/>-->
+
+
+    <!--========================基本数据类型及集合的注入=====================================-->
+
+            <bean id="baseService" class="com.libang.service.BaseService">
+                    <property name="id" value="123"/>
+                    <property name="name" value="tom"/>
+                    <property name="score" value="90.90"/>
+
+
+                <property name="stringList" >
+                    <list>
+                        <value>abc</value>
+                        <value>123</value>
+                        <value>xvf</value>
+                    </list>
+                </property>
+
+                <property name="numSets">
+                    <set>
+                        <value>123</value>
+                        <value>456</value>
+                    </set>
+                </property>
+
+                <property name="maps">
+                    <map>
+                        <entry key="name" value="jack"/>
+                        <entry key="addr" value="郑州"/>
+                    </map>
+                </property>
+
+                <property name="properties">
+                    <props>
+                        <prop key="driver">com.mysql.jdbc.Driver</prop>
+                        <prop key="username">root</prop>
+                    </props>
+
+                </property>
+
+            </bean>
 
 
 
