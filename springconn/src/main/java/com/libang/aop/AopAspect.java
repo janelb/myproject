@@ -1,6 +1,7 @@
 package com.libang.aop;
 
-import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,18 +13,44 @@ import org.springframework.stereotype.Component;
 @Component("aopAspect")
 @Aspect
 public class AopAspect {
+    @Pointcut("execution(* com.libang.service..*.*(..))")
+    public void pointCut(){}
 
-    public void beforeAdvice() {
+    @Before("pointCut()")
+    public void beforeAdvice(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        /*获取目标类的方法名 */
+        System.out.println(methodName);
         System.out.println("前置通知");
     }
-    public void afterAdvice() {
-        System.out.println("后置通知");
+
+    @AfterReturning(value ="pointCut()" , returning="result")
+    /*JoinPoint 要放在参数类表的第一位*/
+    public void afterAdvice(JoinPoint joinPoint,Object result) {
+        String methodName = joinPoint.getSignature().getName();
+        System.out.println(methodName);
+        System.out.println("后置通知---->"+ result );
     }
-    public void exceptionAdvice() {
-        System.out.println("异常通知");
+
+    @AfterThrowing(value = "pointCut()" ,throwing = "ex")
+    public void exceptionAdvice(JoinPoint joinPoint,Exception ex) {
+        String methodName  = joinPoint.getSignature().getName();
+        System.out.println(methodName);
+        System.out.println("异常通知---->" +ex.getMessage());
     }
-    public void finallyAdvice() {
+    @After("pointCut()")
+    public void finallyAdvice(JoinPoint joinPoint) {
+
+        String methodName = joinPoint.getSignature().getName();
+        System.out.println(methodName);
         System.out.println("最终通知");
+    }
+
+    /*环绕通知*/
+    public void aroundAdvice(){
+
+
+
     }
 
 

@@ -22,18 +22,20 @@ import javax.annotation.Resources;
 public class UserService {
 
     /*如果是setter方法注入，setter方法可以省略，在属性上添加注解*/
-    @Autowired
+ /*   @Autowired*/
     private UserDao userDao;
 
     /*构造方法注入*/
-  /*  @Autowired
+    @Autowired
      public  UserService(UserDao userDao){
          this.userDao =userDao;
-     }*/
+    }
 
     public  void save(){
+          /*  int n =10/0;*/
         userDao.save();
     }
+
 
 
 
