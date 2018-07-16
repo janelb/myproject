@@ -8,8 +8,8 @@ public class ProxyCglib extends Sale {
 
     @Override
     public void salePc() {
-        System.out.println("售前服务....");
+       /* System.out.println("售前服务....");*/
         super.salePc();
-        System.out.println("售后服务....");
+     /*   System.out.println("售后服务....");*/
     }
 }

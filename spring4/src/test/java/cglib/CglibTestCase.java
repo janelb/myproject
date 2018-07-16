@@ -15,12 +15,14 @@ import java.lang.reflect.Method;
  */
 public class CglibTestCase {
 
+
     @Test
     public void testCglib(){
         //创建Enhancer对象
         Enhancer enhancer = new Enhancer();
         //设置目标对象
         enhancer.setSuperclass(Sale.class);
+        //设置代理对象的代理行为
         enhancer.setCallback( new SubjectMethodInterceptor());
 
         //动态代理产生对象

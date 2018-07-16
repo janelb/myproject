@@ -9,4 +9,9 @@ public class Lenven implements Sale {
     public void salePc() {
         System.out.println("联想厂家销售电脑一台。。。");
     }
+
+    @Override
+    public int salePrice() {
+        return 100;
+    }
 }

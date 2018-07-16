@@ -20,6 +20,7 @@ public class AopTestCase {
         Sale sale = (Sale)context.getBean("dell");
 
         sale.salePc();
+        int price = sale.salePrice();
 
 
 

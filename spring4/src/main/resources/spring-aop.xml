@@ -10,14 +10,32 @@
         <!--将通知类放入spring容器-->
     <bean id="aopAspect" class="com.libang.aop.AopAspect"/>
     <bean id="dell" class="com.libang.proxy.Dell"/>
+
     <aop:config>
         <!--配置依赖的通知类-->
         <aop:aspect ref="aopAspect">
             <!--<aop:pointcut id="myPoint" expression="execution(public void com.libang.aop.AopAspect.beforeAdvice(..))"/>-->
             <!--定义切入点，在什么类的什么方法上添加切入点-->
             <aop:pointcut id="myPoint" expression="execution(* com.libang.proxy..*.*(..))"/>
-            <!--加入前置通知-->
+
+
+        <!--    &lt;!&ndash;加入前置通知&ndash;&gt;
             <aop:before method="beforeAdvice" pointcut-ref="myPoint"/>
+
+            &lt;!&ndash;加入后置通知 有参数时时添加 returning="参数名"&ndash;&gt;
+            <aop:after-returning method="afterAdvice" pointcut-ref="myPoint" returning="result"/>
+
+            &lt;!&ndash;异常通知 有参数时 throwing="参数名"&ndash;&gt;
+            <aop:after-throwing method="exceptionAdvice" pointcut-ref="myPoint" throwing="ex"/>
+            &lt;!&ndash;最终通知&ndash;&gt;
+            <aop:after method="finallyAdvice" pointcut-ref="myPoint"/>-->
+
+
+
+            <!--环绕通知 与其他通知是互斥关系-->
+            <aop:around method="aroundAdvice" pointcut-ref="myPoint"/>
+
+
         </aop:aspect>
 
     </aop:config>

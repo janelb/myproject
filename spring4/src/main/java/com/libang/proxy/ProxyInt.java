@@ -18,4 +18,9 @@ public class ProxyInt implements Sale {
         System.out.println("销售鼠标200.。");
         System.out.println("抽奖400元");
     }
+
+    @Override
+    public int salePrice() {
+        return 100;
+    }
 }

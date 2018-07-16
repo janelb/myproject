@@ -13,4 +13,15 @@ public class Dell implements Sale {
         System.out.println("dell厂家销售电脑一台。。。。");
 
     }
+
+    @Override
+    public int salePrice() {
+
+        System.out.println("售价100元");
+
+        return 100;
+
+    }
+
+
 }

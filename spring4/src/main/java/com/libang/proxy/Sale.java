@@ -8,5 +8,7 @@ package com.libang.proxy;
 public interface Sale {
 
     void salePc();
+    int salePrice();
+
 
 }
