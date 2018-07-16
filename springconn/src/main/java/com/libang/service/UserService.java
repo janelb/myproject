@@ -15,20 +15,21 @@ import javax.annotation.Resources;
  * @date 2018/7/16 19:10
  */
 
+
 @Service("userService")
 /*@Scope("prototype")
 @Lazy*/
 public class UserService {
 
+    /*如果是setter方法注入，setter方法可以省略，在属性上添加注解*/
+    @Autowired
     private UserDao userDao;
 
-
     /*构造方法注入*/
-    @Autowired
+  /*  @Autowired
      public  UserService(UserDao userDao){
          this.userDao =userDao;
-
-     }
+     }*/
 
     public  void save(){
         userDao.save();
