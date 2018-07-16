@@ -1,6 +1,7 @@
 package com.libang.aop;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -14,18 +15,19 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class AopAspect {
     @Pointcut("execution(* com.libang.service..*.*(..))")
-    public void pointCut(){}
+    public void pointCut() {
+    }
 
-    @Before("pointCut()")
+   /* @Before("pointCut()")
     public void beforeAdvice(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
-        /*获取目标类的方法名 */
+        *//*获取目标类的方法名 *//*
         System.out.println(methodName);
         System.out.println("前置通知");
     }
 
     @AfterReturning(value ="pointCut()" , returning="result")
-    /*JoinPoint 要放在参数类表的第一位*/
+    *//*JoinPoint 要放在参数类表的第一位*//*
     public void afterAdvice(JoinPoint joinPoint,Object result) {
         String methodName = joinPoint.getSignature().getName();
         System.out.println(methodName);
@@ -44,12 +46,29 @@ public class AopAspect {
         String methodName = joinPoint.getSignature().getName();
         System.out.println(methodName);
         System.out.println("最终通知");
-    }
+    }*/
 
     /*环绕通知*/
-    public void aroundAdvice(){
+    @Around("pointCut()")
+    public Object aroundAdvice(ProceedingJoinPoint proceedingJoinPoint) {
 
+        Object result = null;
+        System.out.println("前置通知");
 
+        try {
+            //进行目标方法的执行
+            result = proceedingJoinPoint.proceed();
+            System.out.println("后置通知");
+
+        } catch (Throwable throwables) {
+
+            System.out.println("异常通知");
+
+        } finally {
+            System.out.println("最终通知");
+        }
+
+        return result;
 
     }
 
