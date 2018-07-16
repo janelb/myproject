@@ -11,6 +11,7 @@
 
    <properties>
        <spring-version>4.3.18.RELEASE</spring-version>
+       <aop-version>4.3.5.RELEASE</aop-version>
 
 
    </properties>
@@ -31,16 +32,28 @@
             <version>3.2.4</version>
         </dependency>
 
+        <!--aop-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${aop-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${aop-version}</version>
+        </dependency>
 
 
 
+        <!--junit-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
 
-
+        <!--logger-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
