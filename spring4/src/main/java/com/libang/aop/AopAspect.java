@@ -17,10 +17,10 @@ public class AopAspect {
         Object object = joinPoint.getTarget();
         /*目标对象的方法名*/
         System.out.println(methodName);
-        /*获取的是目标对象*/
+        /*获取的是目标对象完全限定名*/
         System.out.println(object);
-
         System.out.println("前置通知");
+
     }
     /*后置通知有返回值*/
     public void afterAdvice(Object result){
