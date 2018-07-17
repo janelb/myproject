@@ -53,5 +53,13 @@ public class StudentDao {
 
 
 
+    public void delete(Integer id){
+        String sql= "delete from student where id=?";
+        jdbcTemplate.update(sql,id);
+
+    }
+
+
+
 
 }

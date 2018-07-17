@@ -35,17 +35,14 @@ public class JdbcTestCase extends BaseTestCase{
 
     @Test
     public void testFindById(){
-
         Student student = studentDao.findById(13);
         System.out.println(student.getStuName());
         Assert.assertNotNull(student);
-
     }
 
 
     @Test
     public void testFindAll(){
-
         List<Student> studentList = studentDao.findAll();
        for(Student student : studentList){
            System.out.println(student);
@@ -58,22 +55,24 @@ public class JdbcTestCase extends BaseTestCase{
         int count = studentDao.count();
         System.out.println(count);
         Assert.assertEquals(13,count);
-
     }
+
 
     @Test
     public void testMap(){
-
         List<Map<String ,Object>> mapList = studentDao.findMapList();
         for(Map<String,Object> maps : mapList){
             for(Map.Entry<String ,Object> entry : maps.entrySet()){
                 System.out.println(entry.getKey());
                 System.out.println(entry.getValue());
-
             }
-
         }
+    }
 
+    @Test
+    public void testDelete(){
+
+        studentDao.delete(22);
 
     }
 }
