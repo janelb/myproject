@@ -30,6 +30,13 @@
                  <version>${spring-version}</version>
              </dependency>
 
+            <!--DI单元测试-->
+             <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-test</artifactId>
+             <version>4.3.5.RELEASE</version>
+            </dependency>
+
              <!--cglib-->
              <dependency>
                  <groupId>cglib</groupId>
