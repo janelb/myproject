@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @date 2018/7/17 9:35
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = Application.class)
+/*@ContextConfiguration(classes = Application.class)*/
+@ContextConfiguration(locations = "classpath:properties.xml")
 public class BaseTestCase {
 }

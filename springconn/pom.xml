@@ -12,10 +12,29 @@
    <properties>
        <spring-version>4.3.18.RELEASE</spring-version>
        <cglib-version>3.2.4</cglib-version>
-       <aop-version>4.3.5.RELEASE</aop-version>
+
    </properties>
 
          <dependencies>
+             <!--jdbc-->
+             <dependency>
+                 <groupId>org.springframework</groupId>
+                 <artifactId>spring-jdbc</artifactId>
+                 <version>${spring-version}</version>
+             </dependency>
+
+             <!--mysql-->
+             <dependency>
+                 <groupId>mysql</groupId>
+                 <artifactId>mysql-connector-java</artifactId>
+                 <version>5.1.45</version>
+             </dependency>
+             <!--数据库来接池-->
+             <dependency>
+                 <groupId>org.apache.commons</groupId>
+                 <artifactId>commons-dbcp2</artifactId>
+                 <version>2.1.1</version>
+             </dependency>
 
              <dependency>
                  <groupId>junit</groupId>
@@ -34,7 +53,7 @@
              <dependency>
              <groupId>org.springframework</groupId>
              <artifactId>spring-test</artifactId>
-             <version>4.3.5.RELEASE</version>
+             <version>${spring-version}</version>
             </dependency>
 
              <!--cglib-->
@@ -48,13 +67,13 @@
              <dependency>
                  <groupId>org.springframework</groupId>
                  <artifactId>spring-aop</artifactId>
-                 <version>${aop-version}</version>
+                 <version>${spring-version}</version>
              </dependency>
 
              <dependency>
                  <groupId>org.springframework</groupId>
                  <artifactId>spring-aspects</artifactId>
-                 <version>${aop-version}</version>
+                 <version>${spring-version}</version>
              </dependency>
 
             <!--JSR330-->
