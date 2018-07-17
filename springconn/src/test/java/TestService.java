@@ -1,5 +1,7 @@
 import com.libang.Application;
 import com.libang.dao.UserDao;
+import com.libang.entity.Student;
+import com.libang.service.StudentService;
 import com.libang.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +11,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author libang
@@ -39,6 +44,26 @@ public class TestService extends BaseTestCase {
         UserService userService = (UserService) context.getBean("userService");*/
 
         userService.save();
+    }
+
+    /*spting事务*/
+    @Autowired
+    private StudentService studentService;
+    @Test
+    public void testBatchSave()throws Exception{
+
+        Student student = new Student();
+        student.setStuName("assdas");
+        student.setSchoolId(3);
+
+
+        Student student1 = new Student();
+        student1.setStuName(null);
+        student1.setSchoolId(2);
+        List<Student> studentList = Arrays.asList(student, student1);
+        studentService.batchSave(studentList);
+
+
     }
 
 

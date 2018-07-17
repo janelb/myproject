@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
  */
 
 //基于内置注解
-@Component("aopAspect")
-@Aspect
+/*@Component("aopAspect")
+@Aspect*/
 public class AopAspect {
     @Pointcut("execution(* com.libang.service..*.*(..))")
     public void pointCut() {
