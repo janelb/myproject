@@ -14,13 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 2018/7/19 11:09
  */
 public class DaoTestCase extends BaseTestCase {
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+
     @Autowired
     private Book2Mapper book2Mapper;
 
     @Test
     public void testFindById(){
-        Book2 book2 = book2Mapper.selectByPrimaryKey(4);
+        Book2 book2 = book2Mapper.selectByPrimaryKey(6);
         System.out.println(book2);
 
 
