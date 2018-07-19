@@ -17,6 +17,7 @@ public class MybatisUtils {
     static {
         Reader reader=null;
         try {
+            //使用字符流的形式来读取mybatis文件
             reader  = Resources.getResourceAsReader("mybatis.xml");
         } catch (IOException e) {
             e.printStackTrace();

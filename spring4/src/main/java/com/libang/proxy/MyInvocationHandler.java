@@ -9,11 +9,11 @@ import java.lang.reflect.Method;
  */
 public class MyInvocationHandler implements InvocationHandler {
 
-    private Object target;
-    public MyInvocationHandler(Object target){
+        private Object target;
+        public MyInvocationHandler(Object target){
 
-        this.target=target;
-    }
+            this.target=target;
+        }
 
 
     @Override
@@ -31,6 +31,6 @@ public class MyInvocationHandler implements InvocationHandler {
 
 
 
-        return null;
+        return result;
     }
 }

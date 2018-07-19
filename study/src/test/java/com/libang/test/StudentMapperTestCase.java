@@ -29,11 +29,14 @@ public class StudentMapperTestCase {
 
     @Before
     public void before(){
+        //创建sqlSession对象
          sqlSession = MybatisUtils.getSqlSession();
-        //动态代理获取接口的实现类对象
+        //动态代理获取接口的实现类对象，调用接口中的方法
         studentMapper = sqlSession.getMapper(StudentMapper.class);
-
     }
+
+
+
     @After
     public void after(){
         sqlSession.close();

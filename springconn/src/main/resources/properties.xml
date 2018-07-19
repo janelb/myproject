@@ -35,11 +35,11 @@
     </bean>
 
     <!-- 配置数据库工具 -->
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+   <!-- <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 
-        <!--如果ref和数据库连接的id不一样就会报 Failed to load ApplicationContext错误-->
+        &lt;!&ndash;如果ref和数据库连接的id不一样就会报 Failed to load ApplicationContext错误&ndash;&gt;
         <property name="dataSource" ref="dataSource"/>
-    </bean>
+    </bean>-->
 
 
     <!--配置jdbc事务管理器-->

@@ -106,6 +106,11 @@ public class StudentMapperTestCase {
     /*分页*/
     @Test
     public void testLimit(){
+
+       /* //从第二条开始取4条
+        PageHelper.offsetPage(2,4);*/
+
+        //表示从第一页开始取3条
         PageHelper.startPage(1,3);
         StudentExample studentExample = new StudentExample();
         List<Student> studentList = studentMapper.selectByExample(studentExample);
@@ -122,7 +127,7 @@ public class StudentMapperTestCase {
       public void testDesc(){
 
           StudentExample studentExample = new StudentExample();
-          //有选择的条件的查询
+          //有选择的条件的查询，查询id是12 或 id是14的学生
           studentExample.or().andIdEqualTo(12);
           studentExample.or().andIdEqualTo(14);
           List<Student> studentList = studentMapper.selectByExample(studentExample);
@@ -151,8 +156,6 @@ public class StudentMapperTestCase {
     /*插入*/
     @Test
     public void testInsert(){
-
-
         Student student = new Student();
         student.setStuName("aaa");
         studentMapper.insertSelective(student);

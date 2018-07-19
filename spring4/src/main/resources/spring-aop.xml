@@ -11,7 +11,7 @@
     <bean id="aopAspect" class="com.libang.aop.AopAspect"/>
     <bean id="dell" class="com.libang.proxy.Dell"/>
 
-    <aop:config>
+    <aop:config>	
         <!--配置依赖的通知类-->
         <aop:aspect ref="aopAspect">
             <!--<aop:pointcut id="myPoint" expression="execution(public void com.libang.aop.AopAspect.beforeAdvice(..))"/>-->

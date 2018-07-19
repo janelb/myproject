@@ -41,14 +41,11 @@ public class StudentDao {
     public int count(){
             String sql = "select count(*) from student";
             return jdbcTemplate.queryForObject(sql,new SingleColumnRowMapper<Long>()).intValue();
-
     }
 
     public List<Map<String ,Object>> findMapList(){
             String sql = "select*from student";
             return jdbcTemplate.query(sql,new ColumnMapRowMapper());
-
-
     }
 
 

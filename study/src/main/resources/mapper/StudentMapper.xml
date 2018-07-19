@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.libang.mapper.StudentMapper">
 
+    <!--默认值: size:1024  eviction:LRU-->
     <cache size="2048" readOnly="true" flushInterval="6000" eviction="LRU"/>
 
 
@@ -12,9 +13,13 @@
            insert into student (stu_name,age) values (#{stuName},#{age})
        </insert>
        -->
+
+
     <!--<insert id="save" parameterType="com.libang.entity.Student" useGeneratedKeys="true" keyProperty="id">
         insert into student (stu_name,age) values (#{stuName},#{age})
     </insert>
+
+
 
 
     &lt;!&ndash;查询所有信息&ndash;&gt;
