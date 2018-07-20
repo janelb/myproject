@@ -1,6 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +8,13 @@
 </head>
 <body>
 
-<h1>hello springMvc!</h1>
-id值为:${id}
-页码为:${p}
+
+    <form action="/user/add" method="post">
+        username:<input type="text" name="username"/><br>
+        addr:     <input type="text" name="addr"/>
+        <button>save</button>
+    </form>
+
 
 </body>
 </html>
