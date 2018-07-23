@@ -32,11 +32,29 @@
     <!--开启静态资源-->
     <mvc:default-servlet-handler/>
 
+
+
     <!--文件上传解析器-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="5242880"/>
-
     </bean>
+
+
+    <!--拦截器 可配置多个拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--拦截路径-->
+            <mvc:mapping path="/**"/>
+            <!--指定拦截器的完全限定名-->
+            <bean class="com.libang.controller.MyInterceptor"/>
+        </mvc:interceptor>
+
+        <!--<mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.libang.controller.MyInterceptor"/>
+        </mvc:interceptor>-->
+
+    </mvc:interceptors>
 
 
 
