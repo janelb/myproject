@@ -19,7 +19,7 @@ import java.io.*;
 @RequestMapping("/file")
 public class FileUploadController {
 
-
+    //文件的上传
     @GetMapping("/upload")
     public String fileUplod(){
 
@@ -40,24 +40,29 @@ public class FileUploadController {
             //获取文件的大小，将文件转换为人们可阅读大小
             System.out.println(FileUtils.byteCountToDisplaySize(fileName.getSize()));
             File file = new File("E:/upload2");
+            //判断文件夹是否存在
             if(!file.exists()){
+                //如果不存在创建文件夹
                 file.mkdirs();
-
             }
-            InputStream inputStream = fileName.getInputStream();
 
+            //获取文件的输入流
+            InputStream inputStream = fileName.getInputStream();
+            //获取文件的输出流
             FileOutputStream outputStream = new FileOutputStream(new File(file,fileName.getOriginalFilename()));
             IOUtils.copy(inputStream,outputStream);
             outputStream.flush();
             outputStream.close();
             inputStream.close();
         }else{
-
+            //RedirectAttributes的addFlashAttribute方法项前端进行传值
             redirectAttributes.addFlashAttribute("message","文件不能为空" );
         }
+        //重定向
         return "redirect:/file/upload";
-
     }
+
+
 
 
 

@@ -3,8 +3,13 @@ package com.libang.controller;
 import com.libang.entity.User;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,11 +18,11 @@ import java.util.List;
  * @author libang
  * @date 2018/7/19 19:12
  */
-/*@Controller*/
+@Controller
 @RequestMapping("/user")
 
 //用于替代Controller, 默认在每个方法上都加上   @ResponseBody
-@RestController
+/*@RestController*/
 public class HelloController {
     //spring 3.x时 @RequestMapping即支持get请求有支持post请求,@RequestMapping(value="/hemo" ,method={RequestMethod.POST,RequestMethod.GET})
     /*@RequestMapping("/hello")*/
@@ -76,19 +81,52 @@ public class HelloController {
     //进行请求转发跳转，和重定向跳转
 
     @GetMapping("/add")
-    public String save(){
+    public String save(@CookieValue String userName, Model model,@RequestHeader(name = "User-Agent") String userAgent){
+        model.addAttribute("userName",userName);
+        //获取请求头信息
+        System.out.println(userAgent);
         //默认是请求转发跳转
         return "user/add";
     }
 
-    @PostMapping("/add")
-    public String save(String username,String addr){
+  /*  @PostMapping("/add")
+    public String save(String userName,String addr){
 
-        System.out.println("username:" +username);
+        System.out.println("userName:" +userName);
         System.out.println("addr:" +addr);
         //路劲前面添加 redirect: 是重定向
         return "redirect:/user/dh";
+    }*/
+
+  //使用原始方法获取前端的值
+    @PostMapping("/add")
+    public String save(User user,HttpServletRequest req, HttpServletResponse resp, HttpSession session){
+
+        //设置cookie
+        Cookie  cookie = new Cookie("userName",user.getUserName());
+        cookie.setDomain("localhost");
+        cookie.setPath("/");
+        cookie.setMaxAge(60*60*24*7);
+        cookie.setHttpOnly(true);
+        resp.addCookie(cookie);
+
+        System.out.println("userName"+user.getUserName());
+        System.out.println("addr"+user.getAddress());
+
+
+
+        //获取前端的值，获取session中的值
+ /*       session.getAttribute("userName");
+        String name = req.getParameter("userName");
+        String addr = req.getParameter("addr");
+        System.out.println(name);
+        System.out.println(addr);*/
+
+
+        return "redirect:/user/dh";
     }
+
+
     @GetMapping("/dh")
     public String hello(){
         return "hello";

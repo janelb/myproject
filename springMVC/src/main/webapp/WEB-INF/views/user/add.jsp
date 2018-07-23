@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +13,7 @@
 
 
     <form action="/user/add" method="post">
-        username:<input type="text" name="username"/><br>
+        username:<input type="text" name="userName" value="${userName}"/><br>
         addr:     <input type="text" name="addr"/>
         <button>save</button>
     </form>
