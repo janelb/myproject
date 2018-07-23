@@ -37,8 +37,10 @@ public class FileUploadController {
             System.out.println(fileName.isEmpty());
             //获取文件的原始名称
             System.out.println(fileName.getOriginalFilename());
+
             //获取文件的大小，将文件转换为人们可阅读大小
             System.out.println(FileUtils.byteCountToDisplaySize(fileName.getSize()));
+
             File file = new File("E:/upload2");
             //判断文件夹是否存在
             if(!file.exists()){

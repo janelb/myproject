@@ -17,8 +17,10 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         System.out.println("-------------------pre--------------------");
+        //获取路径
         String uri = request.getRequestURI();
         if(uri.startsWith("/static")){
+            //判断是否是以static开头，如果是直接通过，不过滤
             return true;
         }
         //判断是否登录
