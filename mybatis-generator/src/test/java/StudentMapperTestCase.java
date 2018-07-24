@@ -142,7 +142,7 @@ public class StudentMapperTestCase {
         StudentExample studentExample =new StudentExample();
         //根据id进行排序
         studentExample.setOrderByClause("id desc");
-        //取出重复
+        //去除重复
         studentExample.setDistinct(true);
         List<Student> studentList = studentMapper.selectByExample(studentExample);
         for(Student student : studentList){

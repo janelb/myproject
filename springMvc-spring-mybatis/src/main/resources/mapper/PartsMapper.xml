@@ -118,7 +118,7 @@
       #{inPrice,jdbcType=DECIMAL}, #{salePrice,jdbcType=DECIMAL}, #{inventory,jdbcType=INTEGER}, 
       #{typeId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.libang.entity.Parts">
+  <insert id="insertSelective" parameterType="com.libang.entity.Parts" useGeneratedKeys="true" keyProperty="id">
     insert into parts
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -179,7 +179,70 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+
+  <resultMap id="partsMap" type="com.libang.entity.Parts" extends="BaseResultMap">
+    <association property="type" javaType="com.libang.entity.Type">
+          <id column="type_id" property="id"/>
+          <result column="type_name" property="typeName"/>
+    </association>
+  </resultMap>
+<!--进行查询-->
+  <select id="findPageWithType" resultType="com.libang.entity.Parts" resultMap="partsMap">
+
+      select parts.*,type.type_name
+      from parts,type where type_id=type.id
+    <where>
+      <if test="keys !=null and keys != ''">
+         and parts_name LIKE  #{%keys%}
+      </if>
+    </where>
+  </select>
+
+
+
+  <!--进行条件查询-->
+  <select id="findPageAndQueryMap" resultType="com.libang.entity.Parts"  resultMap="partsMap">
+
+      SELECT p.*, t.type_name
+      FROM
+      parts as p
+      LEFT JOIN `type` as t
+      ON  p.type_id = t.id
+     <where>
+       <if test="partsName!=null and partsName!=''">
+         and p.parts_name like concat('%',#{partsName},'%')
+       </if>
+      <if test="partsType != null and partsType !=''">
+        and p.type_id = #{partsType}
+      </if>
+     </where>
+
+  </select>
+
+    <!--number-->
+    <select id="findPageAndQueryMapAndNumber" resultType="com.libang.entity.Parts"  resultMap="partsMap">
+
+      SELECT p.*, t.type_name
+      FROM
+      parts as p
+      LEFT JOIN `type` as t
+      ON  p.type_id = t.id
+      <where>
+        <if test="partsName!=null and partsName!=''">
+          and p.parts_name like concat('%',#{partsName},'%')
+        </if>
+        <if test="partsType != null and partsType !=''">
+          and p.type_id = #{partsType}
+        </if>
+        <if test="inventory != null and inventory != ''">
+          and p.inventory &lt;= #{inventory}
+        </if>
+      </where>
+
+    </select>
+
+
+    <update id="updateByExampleSelective" parameterType="map">
     update parts
     <set>
       <if test="record.id != null">
