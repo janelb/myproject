@@ -4,6 +4,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
 import org.slf4j.Logger;
@@ -60,13 +61,27 @@ public class QuickStart {
               for(Boolean result : results){
                   logger.info("result:{}",result);
               }
+                //判断当前登录对象是否拥有所有角色
+                logger.info("result All:{} ",subject.hasAllRoles(Arrays.asList("admin")));
 
+              //通过isPermitted()方法判断当前对象是否具有对应的权限
+              logger.info("customer: add --> {}",subject.isPermitted("customer:delete"));
+              logger.info("customer : all -->{}",subject.isPermitted("customer:add","customer:query"));
 
+              //判断是否具有该权限，没有抛出异常
+              subject.checkPermission("customer:add");
 
+              //获取session,大多数情况下可以替代HttpSession
+              Session session = subject.getSession();
+              //存值
+                session.setAttribute("userName",subject.getPrincipal());
+               //取值
+               session.getAttribute("userName");
 
 
                 //安全退出
                 subject.logout();
+                
             } catch (UnknownAccountException ex){
                     ex.printStackTrace();
                 System.out.println("未找到该账号");
