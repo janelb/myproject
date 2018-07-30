@@ -81,7 +81,7 @@ public class QuickStart {
 
                 //安全退出
                 subject.logout();
-                
+
             } catch (UnknownAccountException ex){
                     ex.printStackTrace();
                 System.out.println("未找到该账号");
