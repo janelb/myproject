@@ -35,6 +35,11 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-body">
+                    <c:if test="${not empty mes}" >
+                        <div style="color: red">
+                                ${mes}
+                        </div>
+                    </c:if>
                     <form action="" method="post" id="addForm">
                         <div class="form-group">
                             <label class=" control-label">配件编号:</label>
@@ -95,8 +100,67 @@
         $("#saveBtn").click(function() {
             $("#addForm").submit();
         })
-        /*$("#addForm").validate({
-        })*/
+
+        $("#addForm").validate({
+            errorElemet:'span',
+            errorClass:'text-danger',
+            rules:{
+                partsNo:{
+                    required:true,
+                   /* remote :'/parts/check'*/
+                },
+                pageName:{
+                    required:true
+                },
+                inventory:{
+                    required:true,
+                    digits:true //必须是纯数字
+                },
+                inPrice:{
+                    required:true,
+                },
+                salePrice:{
+                    required:true,
+                },
+                typeId:{
+                    required:true,
+                },
+                address:{
+                    required:true,
+                }
+
+            },
+            errorPlacement : function(error, element) {//错误位置信息设置方法
+
+                error.appendTo(element.parent());//element是录入数据的对象
+            },
+            messages:{
+                partsNo:{
+                    required:"请输入编码"
+
+                },
+                pageName:{
+                    required:"请输入名称"
+                },
+                inventory:{
+                    required:"请输入数量"
+
+                },
+                inPrice:{
+                    required:"请输入进价"
+                },
+                salePrice:{
+                    required:"请输入售价"
+                },
+                typeId:{
+                    required:"请输入人类型"
+                },
+                address:{
+                    required:"请输入产地"
+                }
+
+            }
+        })
     })
 </script>
 </body>

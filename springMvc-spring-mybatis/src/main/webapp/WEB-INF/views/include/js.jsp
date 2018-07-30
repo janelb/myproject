@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -15,3 +14,4 @@
 <script src="/static/plugins/daterangepicker/moment.js"></script>
 <script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
 <script src="/static/plugins/layer/layer.js"></script>
+<script src="/static/dist/js/jquery.validate.min.js"></script>

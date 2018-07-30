@@ -242,7 +242,20 @@
     </select>
 
 
-    <update id="updateByExampleSelective" parameterType="map">
+    <!--根据pageNo查找-->
+  <select id="findByPageNo" resultType="com.libang.entity.Parts" >
+    select*from parts where parts_no = ?
+
+  </select>
+
+  <!--根据typeId进行查找-->
+  <select id="findBYTypeId" resultType="com.libang.entity.Parts">
+      select *from parts where type_id = #{id}
+
+  </select>
+
+
+  <update id="updateByExampleSelective" parameterType="map">
     update parts
     <set>
       <if test="record.id != null">

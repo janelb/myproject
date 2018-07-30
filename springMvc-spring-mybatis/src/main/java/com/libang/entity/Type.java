@@ -33,12 +33,4 @@ public class Type implements Serializable {
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
-
-    @Override
-    public String toString() {
-        return "Type{" +
-                "id=" + id +
-                ", typeName='" + typeName + '\'' +
-                '}';
-    }
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--1.配置安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="realm" ref="MyRealm"/>
+    </bean>
+
+    <!--2.配置缓存管理器-->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+    </bean>
+    <!--3.自定义realam-->
+    <bean id="MyRealm" class="com.libang.erp.shiro.MyRealm">
+    </bean>
+
+    <!--4.配置生命周期管理器-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <!--5.开启基于注解的shiro-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+    <!--6.配置shiro过滤器-->
+    <!--id的属性必须和web.xml中filter-name属性保持一致-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!--配置安全管理器-->
+        <property name="securityManager" ref="securityManager"/>
+        <!--配置登录的url-->
+        <property name="loginUrl" value="/manage/employ/login"/>
+        <!--配置登录成功的url-->
+        <property name="successUrl" value="/manage/employ/home"/>
+        <!--配置没有权限的资源跳转-->
+        <property name="unauthorizedUrl" value="/manage/employ/401"/>
+        <!--规则-->
+        <property name="filterChainDefinitions">
+            <value>
+                /favicon.ico = anon
+               /static/**=anon
+                /logout=anon
+                /**=authc
+            </value>
+        </property>
+    </bean>
+
+</beans>

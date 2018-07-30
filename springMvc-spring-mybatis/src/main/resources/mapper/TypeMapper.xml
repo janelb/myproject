@@ -133,7 +133,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+
+  <!--根据名称查找-->
+    <select id="findByName" resultType="com.libang.entity.Type">
+
+      select * from type where type_name=#{typeName}
+
+
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
     update type
     <set>
       <if test="record.id != null">

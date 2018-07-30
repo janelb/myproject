@@ -151,4 +151,19 @@ public class PartController {
 
 
 
+    //检查编码
+
+    @GetMapping("/check")
+    public String check(String pageNo,RedirectAttributes redirectAttributes){
+
+      Parts parts=  partService.findByPageNo(pageNo);
+      if(parts != null){
+        redirectAttributes.addFlashAttribute("mes","编码重复");
+      }
+
+        return "parts/new";
+    }
+
+
+
 }

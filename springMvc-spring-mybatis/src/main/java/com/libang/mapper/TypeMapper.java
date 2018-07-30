@@ -27,4 +27,6 @@ public interface TypeMapper {
     int updateByPrimaryKeySelective(Type record);
 
     int updateByPrimaryKey(Type record);
+
+    Type findByName(String typeName);
 }

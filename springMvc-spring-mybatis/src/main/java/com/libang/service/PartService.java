@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.libang.entity.Parts;
 import com.libang.entity.Type;
 
+import javax.servlet.http.Part;
 import java.util.List;
 import java.util.Map;
 
@@ -75,10 +76,16 @@ public interface PartService {
 
 
     /**
-     * 根据关键字进行查找`
-     * @param pageNo 页码
-     * @param keys 关键字
+     * 检查编码
+     * @param pageNo
+     */
+    Parts findByPageNo(String pageNo);
+
+
+    /**
+     * 根据TypeId进行查找
+     * @param id
      * @return
      */
-/*    PageInfo<Parts> findPageByKey(Integer pageNo, String keys);*/
+    List<Parts> findByTypeId(Integer id);
 }

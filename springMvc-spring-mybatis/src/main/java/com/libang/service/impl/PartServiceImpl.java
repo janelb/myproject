@@ -10,12 +10,10 @@ import com.libang.mapper.PartsMapper;
 import com.libang.mapper.TypeMapper;
 import com.libang.service.PartService;
 import com.libang.utils.Constant;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Part;
 import java.util.List;
 import java.util.Map;
 
@@ -157,6 +155,32 @@ public class PartServiceImpl implements PartService {
         return pageInfo;
 
 
+    }
+
+    /**
+     * 检查编码
+     *
+     * @param pageNo
+     */
+    @Override
+    public Parts findByPageNo(String pageNo) {
+
+       Parts parts= partsMapper.findByPageNo(pageNo);
+
+        return parts;
+    }
+
+    /**
+     * 根据TypeId进行查找
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Parts> findByTypeId(Integer id) {
+
+        List<Parts> partsList = partsMapper.findBYTypeId(id);
+        return partsList;
     }
 
 

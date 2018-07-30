@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import javax.servlet.http.Part;
+
 public interface PartsMapper {
     long countByExample(PartsExample example);
 
@@ -45,5 +47,20 @@ public interface PartsMapper {
      */
     List<Parts> findPageAndQueryMap(Map<String,Object> queryMap);
 
+    /**
+     * 按数量进行筛选
+     * @param queryMap
+     * @return
+     */
     List<Parts> findPageAndQueryMapAndNumber(Map<String,Object> queryMap);
+
+    /**
+     * 根据pageNo进行查找
+     * @param pageNo
+     * @return
+     */
+    Parts findByPageNo(String pageNo);
+
+
+    List<Parts> findBYTypeId(Integer id);
 }
