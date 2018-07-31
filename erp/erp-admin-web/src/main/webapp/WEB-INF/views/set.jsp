@@ -45,20 +45,21 @@
                     <form action="" method="post" id="addEmpl">
                         <div class="form-group">
                             <label>姓名</label>
-                            <input type="text" name="id" value="${employee.id}" hidden >
-                            <input type="text" name="employeeName"  value="${employee.employeeName}" class="form-control">
+                           <%-- <input type="text" name="id" value="${employee.id}" hidden >--%>
+                            <input type="text" name="id" value="<shiro:principal property="id"/>" hidden >
+                            <input type="text" name="employeeName"  value="<shiro:principal property="employeeName"/>" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>手机号码</label>
-                            <input type="text" name="tell" value="${employee.tell}" class="form-control">
+                            <input type="text" name="tell" value="<shiro:principal property="tell"/>" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>请输入新密码</label>
-                            <input type="password" name="password" id="password" value="${employee.password}" class="form-control" >
+                            <input type="password" name="password" id="password" value="<shiro:principal property="password"/>" class="form-control" >
                         </div>
                         <div class="form-group">
                             <label>请再次输入新密码</label>
-                            <input type="password" name="repassword" value="${employee.password}"  class="form-control" >
+                            <input type="password" name="repassword" value="<shiro:principal property="password"/>"  class="form-control" >
                         </div>
 
                     </form>

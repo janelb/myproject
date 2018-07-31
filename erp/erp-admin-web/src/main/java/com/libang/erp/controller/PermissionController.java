@@ -1,6 +1,7 @@
 package com.libang.erp.controller;
 
 import com.google.common.collect.Lists;
+import com.libang.erp.controller.controllerException.NotFoundException;
 import com.libang.erp.dto.ResponseBean;
 import com.libang.erp.entity.Permission;
 import com.libang.erp.exception.ServiceException;
@@ -75,20 +76,23 @@ public class PermissionController {
 
         Permission permission = rolesPermissionService.findByPermissionId(id);
         if (permission == null) {
-            throw new NullPointerException();
+            /*throw new NullPointerException();*/
+            throw new NotFoundException();
         }
 
         //封装菜单权限列表
         List<Permission> menuPermissionList = rolesPermissionService.findPermissionListByType(Permission.PERMISSION_TYPE_MENU);
 
-        //排除当前的permission对象,及其子对象
+        //排除当前的permission对象
         menuPermissionList.remove(permission);
+        //删除当前对象的子对象
         remove(menuPermissionList, permission);
 
         model.addAttribute("permission", permission);
         model.addAttribute("menuPermissionList", menuPermissionList);
         return "manage/permission/edit";
     }
+
     /*使用递归方式进行循环迭代删除*/
 
     private void remove(List<Permission> menuPermissionList, Permission permission) {
@@ -100,7 +104,6 @@ public class PermissionController {
                 remove(menuPermissionList, temp.get(i));
             }
             menuPermissionList.remove(permission);
-
         }
     }
 

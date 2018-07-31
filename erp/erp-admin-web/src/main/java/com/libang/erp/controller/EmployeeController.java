@@ -13,7 +13,10 @@ import com.libang.erp.service.RolesPermissionService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,7 +76,7 @@ public class EmployeeController {
      /*===================新增员工==========================*/
 
     @GetMapping("/add")
-
+    @RequiresPermissions("employee:add")
     public String addEmploy(Model model){
             List<Role> roleList = rolesPermissionService.findAllRoles();
             model.addAttribute("roleList",roleList);
@@ -82,6 +85,7 @@ public class EmployeeController {
 
 
     @PostMapping("/add")
+    @RequiresPermissions("employee:add")
     public String addEmploy(Employee employee,Integer[] roleIds){
         employeeService.save(employee,roleIds);
         return"redirect:/manage/employ";
@@ -152,6 +156,15 @@ public class EmployeeController {
     @GetMapping("/login")
     public String login(){
 
+        Subject subject = SecurityUtils.getSubject();
+        //判断是否被认证
+        if(subject.isAuthenticated()){
+            subject.logout();
+        }
+        //是否被记住
+        if(subject.isRemembered()){
+            return "home";
+        }
         return "login";
     }
 
@@ -159,6 +172,7 @@ public class EmployeeController {
     public String login(String tell,
                         String password,
                         String remeber,
+                        String remeberMe,
                         HttpServletRequest request,
                         HttpServletResponse response,
                         HttpSession session,
@@ -170,7 +184,7 @@ public class EmployeeController {
         String loginIp = request.getRemoteAddr();
 
         //通过tell、password封装UsernamePasswordToken对象进行登录
-        UsernamePasswordToken usernamePasswordToken  = new UsernamePasswordToken(tell,password,loginIp);
+        UsernamePasswordToken usernamePasswordToken  = new UsernamePasswordToken(tell,password,remeberMe!=null,loginIp);
 
         try{
                 //进行登录
@@ -198,10 +212,16 @@ public class EmployeeController {
                 }
             }
 
+            //跳转到登录界面请求
 
+            SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+            String url = "/manage/employ/home";
+            if(savedRequest !=null ){
+                // 获得callback的url
+               url = savedRequest.getRequestUrl();
+            }
 
-
-            return "redirect:/manage/employ/home";
+            return "redirect:"+url;
 
             }catch(UnknownAccountException | IncorrectCredentialsException e){
                     redirectAttributes.addFlashAttribute("message","用户名或密码错误");
@@ -256,6 +276,7 @@ public class EmployeeController {
                            HttpServletRequest request,
                            Model model){
         Subject subject =SecurityUtils.getSubject();
+
         Cookie[] cookies = request.getCookies();
         if(cookies!=null){
             for(Cookie cookie : cookies){
@@ -328,9 +349,9 @@ public class EmployeeController {
             return "set";
         }
         @PostMapping("/{id:\\d++}/set")
-        public String update(Employee employee,HttpSession session){
+        public String update(Employee employee){
             employeeService.set(employee);
-            session.invalidate();
+
             return "login";
         }
 

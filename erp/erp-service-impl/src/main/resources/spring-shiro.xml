@@ -3,10 +3,28 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!--配置Cookie路径-->
+    <bean id="rememberCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <property name="maxAge" value="604800"/>
+        <property name="httpOnly" value="true"/>
+        <property name="name" value="remeberMe"/>
+    </bean>
+
+    <!--配置记住我路径-->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberCookie"/>
+        <!--对账号密码进行加密-->
+        <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}"/>
+
+     </bean>
+
+
     <!--1.配置安全管理器-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="cacheManager" ref="cacheManager"/>
         <property name="realm" ref="MyRealm"/>
+        <!--配置记住我路径-->
+        <property name="rememberMeManager" ref="rememberMeManager"/>
     </bean>
 
     <!--2.配置缓存管理器-->
@@ -42,7 +60,11 @@
                 /favicon.ico = anon
                /static/**=anon
                 /logout=anon
-                /**=authc
+                # /manage/employee/add = perms[employee:add]
+               <!-- 最高级别的拦截-->
+              <!--  /**=authc-->
+                 <!--级别较低的拦截-->
+                /**=user
             </value>
         </property>
     </bean>

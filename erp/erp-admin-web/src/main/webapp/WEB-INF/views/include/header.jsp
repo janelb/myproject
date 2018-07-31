@@ -87,14 +87,15 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<script src="/static/dist/js/jquery.validate.min.js"></script>
+<%--<script src="/static/dist/js/jquery.validate.min.js"></script>--%>
 <script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script>
     $(function() {
 
         $("#updateBtn").click(function () {
 
-           window.location.href="/manage/employ/${sessionScope.employee.id}/set";
+      /*  window.location.href="/manage/employ/*/<%--${sessionScope.employee.id}/set";--%>
+           window.location.href="/manage/employ/<shiro:principal property="id"/>/set";
         })
 
         $("#updateForm").validate({

@@ -31,7 +31,7 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-body">
-                    Start creating your amazing application!
+                   <h3>ERP汽车服务管理系统。。。</h3>
                 </div>
                 <!-- /.box-body -->
             </div>

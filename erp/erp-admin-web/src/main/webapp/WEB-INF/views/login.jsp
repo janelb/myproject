@@ -61,6 +61,10 @@
                                         checked
                                 </c:if>
                                 > 记住账号
+                            </label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                            <label>
+                                <input type="checkbox" name="remeberMe" value="remeberMe"
+                                > 七天免登陆
                             </label>
                         </div>
                     </div>

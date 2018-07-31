@@ -49,7 +49,7 @@
                             <th>权限代号</th>
                             <th>资源URL</th>
                             <th>类型</th>
-                            <th>#</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>

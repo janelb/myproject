@@ -68,8 +68,10 @@
             <div class="box">
                 <div class="box-header with-border">
                     <div class="box-tools pull-right" id="add" >
+                        <shiro:hasPermission name="employee:add">
                         <button type="button" class="btn btn-box-tool"   title="Collapse">
                             <i class="fa fa-plus"></i> 添加员工</button>
+                        </shiro:hasPermission>
                     </div>
                 </div>
                 <div class="box-body">
@@ -108,18 +110,18 @@
                             <td>
                                <c:choose>
                                    <c:when test="${employee.state==1}">
-                                        <a href="javascript:;" rel="${employee.id}"  fro="${employee.state}" class="frozen" id="fro">解除</a>
+                                        <a href="javascript:;" rel="${employee.id}"  fro="${employee.state}" class="btn btn-primary btn-xs   frozen" id="fro" title="解除"><i class="fa fa-unlock"></i></a>
                                    </c:when>
                                    <c:when test="${employee.state==2}">
-                                       <a href="javascript:;" rel="${employee.id}"  fro="${employee.state}" class="frozen" id="fro">禁止</a>
+                                       <a href="javascript:;" rel="${employee.id}"  fro="${employee.state}" class="btn btn-danger btn-xs   frozen" id="fro" title="禁止"><i class="fa fa-snowflake-o"></i></a>
                                    </c:when>
                                </c:choose>
 
 
 
 
-                                <a  href="javascript:;" rel="${employee.id}" class="del">删除</a>
-                                <a href="/manage/employ/${employee.id}/edit">编辑</a>
+                                <a  href="javascript:;" rel="${employee.id}" class="btn btn-danger btn-xs  del" title="删除"><i class="fa fa-trash"></i></a>
+                                <a href="/manage/employ/${employee.id}/edit"  class="btn btn-primary btn-xs" title="编辑"><i class="fa fa-pencil"></i></a>
                             </td>
                         </tr>
                         </tbody>
