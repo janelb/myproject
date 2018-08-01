@@ -42,7 +42,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">修改员工信息</h3>
                     <div class="box-tools pull-right">
-                        <a class="btn btn-primary btn-sm" href="employee.html"><i class="fa fa-arrow-left"></i> 返回列表</a>
+                        <a class="btn btn-primary btn-sm" href="/manage/employ"><i class="fa fa-arrow-left"></i> 返回列表</a>
                     </div>
                 </div>
                 <div class="box-body">

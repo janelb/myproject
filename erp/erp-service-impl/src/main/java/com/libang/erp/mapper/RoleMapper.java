@@ -1,6 +1,7 @@
 package com.libang.erp.mapper;
 
 
+import com.libang.erp.entity.Permission;
 import com.libang.erp.entity.Role;
 import com.libang.erp.entity.RoleExample;
 import org.apache.ibatis.annotations.Param;
@@ -40,4 +41,6 @@ public interface RoleMapper {
     List<Role> findListByEmployeeId(Integer id);
 
     Role findByIdWithPermission(Integer id);
+
+    List<Permission> findListByRoleId(Integer id);
 }

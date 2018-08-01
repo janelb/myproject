@@ -1,6 +1,7 @@
 package com.libang.erp.mapper;
 
 
+import com.libang.erp.entity.EmployeeRole;
 import com.libang.erp.entity.RolePermission;
 import com.libang.erp.entity.RolePermissionExample;
 import org.apache.ibatis.annotations.Param;
@@ -29,4 +30,11 @@ public interface RolePermissionMapper {
     int updateByPrimaryKeySelective(RolePermission record);
 
     int updateByPrimaryKey(RolePermission record);
+
+
+    RolePermission findPermissionByRoleId(Integer roleId);
+
+    void deleteByRoleId(Integer roleId);
+
+    List<RolePermission> findPermissionListByRoleId(Integer roleId);
 }

@@ -57,7 +57,7 @@
                         </div>
                         <div class="form-group">
                             <label>密码(默认000000)</label>
-                            <input type="password" name="pasword" class="form-control" value="000000">
+                            <input type="password" name="password" class="form-control" value="000000">
                         </div>
 
                         <div class="form-group">

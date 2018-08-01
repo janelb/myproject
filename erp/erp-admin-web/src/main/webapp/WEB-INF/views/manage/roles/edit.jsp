@@ -59,7 +59,7 @@
                             <table class="table tree">
                                 <tbody>
                                 <c:forEach items="${permissionBooleanMap}" var="entry">
-                                    console.log(${entry.value});
+
                                     <tr class="treegrid-${entry.key.id}
                                 <c:if test="${entry.key.pid != 0}">
                                     treegrid-parent-${entry.key.pid}

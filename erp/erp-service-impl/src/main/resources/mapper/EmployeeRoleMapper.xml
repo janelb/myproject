@@ -142,7 +142,19 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+
+  <!--111-->
+    <select id="findRoleByEmployId" resultType="com.libang.erp.entity.EmployeeRole">
+      select * from employee_role where employee_id = #{id}
+
+    </select>
+  <!--通过employeeId查找roleList-->
+    <select id="findRoleListByEmployId" resultType="com.libang.erp.entity.EmployeeRole">
+       select * from employee_role where employee_id = #{id}
+
+
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
     update employee_role
     <set>
       <if test="record.id != null">

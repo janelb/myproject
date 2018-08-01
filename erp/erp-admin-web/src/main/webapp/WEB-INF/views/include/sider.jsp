@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 
 <aside class="main-sidebar">
     <section class="sidebar">
@@ -79,9 +81,17 @@
 
             <li class="header">系统管理</li>
             <!-- 部门员工管理 -->
-            <li><a href="/manage/employ"><i class="fa fa-users"></i> <span>员工管理</span></a></li>
-            <li><a href="/manage/roles"><i class="fa fa-users"></i> <span>角色管理</span></a></li>
-            <li><a href="/manage/permission"><i class="fa fa-users"></i> <span>权限管理</span></a></li>
+            <shiro:hasPermission name="employee:manage">
+            <li><a href="/manage/employ"><i class="fa fa-users"></i><span>员工管理</span></a></li>
+            </shiro:hasPermission>
+
+            <shiro:hasPermission name="role:manage">
+            <li><a href="/manage/roles"><i class="fa fa-users"></i><span>角色管理</span></a></li>
+            </shiro:hasPermission>
+
+            <shiro:hasPermission name="permission:manage">
+            <li><a href="/manage/permission"><i class="fa fa-users"></i><span>权限管理</span></a></li>
+            </shiro:hasPermission>
         </ul>
     </section>
     <!-- /.sidebar -->

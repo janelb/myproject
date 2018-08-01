@@ -37,6 +37,23 @@
 
     <!--4.配置生命周期管理器-->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!--配置权限规则-->
+    <bean id="filterChainDefinitionMap" class="com.libang.erp.shiro.CustomerFilterChainDefinition">
+        <property name="filterChainDefinitions">
+            <value>
+                /favicon.ico = anon
+                /static/**=anon
+                /logout=logout
+            </value>
+        </property>
+    </bean>
+
+
+
+
+
+
     <!--5.开启基于注解的shiro-->
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
           depends-on="lifecycleBeanPostProcessor"/>
@@ -54,19 +71,24 @@
         <property name="successUrl" value="/manage/employ/home"/>
         <!--配置没有权限的资源跳转-->
         <property name="unauthorizedUrl" value="/manage/employ/401"/>
+        <!--自定义权限规则-->
+        <property name="filterChainDefinitionMap" ref="filterChainDefinitionMap"/>
+
+
         <!--规则-->
-        <property name="filterChainDefinitions">
+      <!--  <property name="filterChainDefinitions">
             <value>
                 /favicon.ico = anon
                /static/**=anon
                 /logout=anon
                 # /manage/employee/add = perms[employee:add]
-               <!-- 最高级别的拦截-->
-              <!--  /**=authc-->
-                 <!--级别较低的拦截-->
+               &lt;!&ndash; 最高级别的拦截&ndash;&gt;
+              &lt;!&ndash;  /**=authc&ndash;&gt;
+                 &lt;!&ndash;级别较低的拦截&ndash;&gt;
                 /**=user
             </value>
-        </property>
+        </property>-->
+
     </bean>
 
 </beans>

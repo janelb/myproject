@@ -223,6 +223,25 @@
   </select>
 
 
+
+  <select id="findListByRoleId" resultType="com.libang.erp.entity.Permission">
+            SELECT
+                  *
+              FROM
+                  permission
+              WHERE
+                  id IN (
+                      SELECT
+                          permission_id
+                      FROM
+                          role_permission
+                      WHERE
+                          role_id=#{id}
+	              )
+
+  </select>
+
+
   <resultMap id="roleWithPermissionMap" type="com.libang.erp.entity.Role" extends="BaseResultMap">
     
     <collection property="permissionList" ofType="com.libang.erp.entity.Permission">

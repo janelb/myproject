@@ -30,4 +30,8 @@ public interface EmployeeRoleMapper {
     int updateByPrimaryKeySelective(EmployeeRole record);
 
     int updateByPrimaryKey(EmployeeRole record);
+
+    EmployeeRole findRoleByEmployId(Integer id);
+
+    List<EmployeeRole> findRoleListByEmployId(Integer id);
 }

@@ -76,7 +76,7 @@ public class EmployeeController {
      /*===================新增员工==========================*/
 
     @GetMapping("/add")
-    @RequiresPermissions("employee:add")
+   /* @RequiresPermissions("employee:add")*/
     public String addEmploy(Model model){
             List<Role> roleList = rolesPermissionService.findAllRoles();
             model.addAttribute("roleList",roleList);
@@ -85,7 +85,7 @@ public class EmployeeController {
 
 
     @PostMapping("/add")
-    @RequiresPermissions("employee:add")
+  /*  @RequiresPermissions("employee:add")*/
     public String addEmploy(Employee employee,Integer[] roleIds){
         employeeService.save(employee,roleIds);
         return"redirect:/manage/employ";
@@ -199,19 +199,7 @@ public class EmployeeController {
                 cookie.setHttpOnly(true);
                 response.addCookie(cookie);
 
-            }else{
-                Cookie[] cookies = request.getCookies();
-                if(cookies!=null){
-                    for(Cookie cookie : cookies){
-                        cookie.setDomain("localhost");
-                        cookie.setPath("/");
-                        cookie.setMaxAge(0);
-                        response.addCookie(cookie);
-                        break;
-                    }
-                }
             }
-
             //跳转到登录界面请求
 
             SavedRequest savedRequest = WebUtils.getSavedRequest(request);

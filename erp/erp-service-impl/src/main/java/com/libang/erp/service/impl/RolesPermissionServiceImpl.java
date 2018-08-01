@@ -341,8 +341,30 @@ public class RolesPermissionServiceImpl implements RolesPermissionService {
         return  roleMapper.selectByExample(roleExample);
     }
 
+    /**
+     * 通过employeeId查找对应的role
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Role> findListByEmployeeId(Integer id) {
+        List<Role> roleList = roleMapper.findListByEmployeeId(id);
 
+        return roleList;
+    }
 
+    /**
+     * 通过roleId查找对应的peimission
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Permission> findPermissionByRoleId(Integer id) {
+        List<Permission> permissionList = roleMapper.findListByRoleId(id);
+        return permissionList;
+    }
 
 
 }

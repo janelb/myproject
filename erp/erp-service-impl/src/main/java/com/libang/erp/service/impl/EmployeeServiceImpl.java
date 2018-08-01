@@ -6,6 +6,7 @@ import com.libang.erp.exception.ServiceException;
 import com.libang.erp.mapper.EmployeeLoginLogMapper;
 import com.libang.erp.mapper.EmployeeMapper;
 import com.libang.erp.mapper.EmployeeRoleMapper;
+import com.libang.erp.mapper.RolePermissionMapper;
 import com.libang.erp.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeLoginLogMapper employeeLoginLogMapper;
     @Autowired
     private EmployeeRoleMapper employeeRoleMapper;
+    @Autowired
+    private RolePermissionMapper rolePermissionMapper;
 
 
     /**
@@ -59,6 +62,17 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public void delById(Integer id) {
+
+        List<EmployeeRole> employeeRoleList = employeeRoleMapper.findRoleListByEmployId(id);
+        for(EmployeeRole employeeRole : employeeRoleList){
+
+             List<RolePermission> rolePermissionList = rolePermissionMapper.findPermissionListByRoleId(employeeRole.getRoleId());
+
+             if(rolePermissionList != null && rolePermissionList.size()>0){
+
+                rolePermissionMapper.deleteByRoleId(employeeRole.getRoleId());
+             }
+        }
         employeeMapper.deleteByPrimaryKey(id);
         employeeRoleMapper.deleteByPrimaryKey(id);
     }

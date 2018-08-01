@@ -110,7 +110,8 @@
                             <td>
                                <c:choose>
                                    <c:when test="${employee.state==1}">
-                                        <a href="javascript:;" rel="${employee.id}"  fro="${employee.state}" class="btn btn-primary btn-xs   frozen" id="fro" title="解除"><i class="fa fa-unlock"></i></a>
+
+                                        <a href="javascript:;" rel="${employee.id}"  fro="${employee.state}" class="btn btn-primary btn-xs   nofrozen" id="fro" title="解除"><i class="fa fa-unlock"></i></a>
                                    </c:when>
                                    <c:when test="${employee.state==2}">
                                        <a href="javascript:;" rel="${employee.id}"  fro="${employee.state}" class="btn btn-danger btn-xs   frozen" id="fro" title="禁止"><i class="fa fa-snowflake-o"></i></a>
@@ -119,9 +120,12 @@
 
 
 
-
+                                <shiro:hasPermission name="employee:del">
                                 <a  href="javascript:;" rel="${employee.id}" class="btn btn-danger btn-xs  del" title="删除"><i class="fa fa-trash"></i></a>
+                                </shiro:hasPermission>
+                                <shiro:hasPermission name="employee:edit">
                                 <a href="/manage/employ/${employee.id}/edit"  class="btn btn-primary btn-xs" title="编辑"><i class="fa fa-pencil"></i></a>
+                                </shiro:hasPermission>
                             </td>
                         </tr>
                         </tbody>
@@ -209,10 +213,15 @@
                         }
 *!/
                     })*/
-
-
                 })
+            });
+        $(".nofrozen").click(function () {
+            var id = $(this).attr("rel");
+            var state = $(this).attr("fro");
+            layer.confirm("你确定要解除吗？", function () {
+                window.location.href = "/manage/employ/" + id + "/frozen/" + state;
             })
+        })
 
 
 

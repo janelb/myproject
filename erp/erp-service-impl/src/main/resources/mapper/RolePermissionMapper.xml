@@ -121,6 +121,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
+
+  <!--aaaaaaaaaaaaa-->
+  <delete id="deleteByRoleId">
+    delete from role_permission where role_id = #{roleId}
+
+  </delete>
   <insert id="insert" parameterType="com.libang.erp.entity.RolePermission">
     insert into role_permission (id, role_id, permission_id
       )
@@ -158,7 +165,19 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <select id="findPermissionByRoleId" resultType="com.libang.erp.entity.RolePermission">
+
+    select * from role_permission where role_id = #{roleId}
+  </select>
+  <!--通过roleId查找permissionList-->
+    <select id="findPermissionListByRoleId" resultType="com.libang.erp.entity.RolePermission">
+
+      select * from role_permission where role_id = #{roleId}
+
+    </select>
+
+
+    <update id="updateByExampleSelective" parameterType="map">
     update role_permission
     <set>
       <if test="record.id != null">
