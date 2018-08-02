@@ -8,6 +8,7 @@ import com.libang.erp.entity.RolePermission;
 import com.libang.erp.exception.ServiceException;
 import com.libang.erp.service.RolesPermissionService;
 
+import com.libang.erp.shiro.CustomerFilterChainDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ public class RolesController {
     @Autowired
 
     private RolesPermissionService rolesPermissionService;
+    @Autowired
+    private CustomerFilterChainDefinition customerFilterChainDefinition;
 
     //返回主页面
 
@@ -35,7 +38,6 @@ public class RolesController {
     public String home(Model model){
         /*TODO*/
         List<Role> roleList = rolesPermissionService.findRoleWithPermission();
-
             model.addAttribute("roleList",roleList);
         return "manage/roles/home";
     }
@@ -49,13 +51,14 @@ public class RolesController {
         //获取权限列表
         List<Permission> permissionList = rolesPermissionService.findAll();
         model.addAttribute("permissionList",permissionList);
+
         return "manage/roles/new";
     }
 
     @PostMapping("/new")
     public String rolesNew(Role role,Integer[] permissionId){
             rolesPermissionService.saveRole(role,permissionId);
-        return "redirect:/manage/roles";
+             return "redirect:/manage/roles";
     }
 
     //删除角色

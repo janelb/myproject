@@ -13,7 +13,12 @@ public class Employee implements Serializable {
      * 账户状态 1：冻结 2：正常
      */
     public static Integer EMPLOYEE_STATE_FROZEN = 1;
+    public static String EMPLOYEE_FROZEN = "冻结";
+
     public static Integer EMPLOYEE_STATE_NORMAL = 2;
+    public static String EMPLOYEE_NORMAL = "正常";
+
+
 
 
 

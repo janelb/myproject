@@ -7,6 +7,7 @@ import com.libang.erp.entity.Permission;
 import com.libang.erp.exception.ServiceException;
 import com.libang.erp.service.RolesPermissionService;
 
+import com.libang.erp.shiro.CustomerFilterChainDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,9 @@ public class PermissionController {
 
     @Autowired
     private RolesPermissionService rolesPermissionService;
+
+    @Autowired
+    private CustomerFilterChainDefinition customerFilterChainDefinition;
 
     //获取所有权限列表
 
@@ -51,6 +55,8 @@ public class PermissionController {
     public String permisssionNew(Permission permission) {
 
         rolesPermissionService.savePermission(permission);
+        //刷新权限
+        customerFilterChainDefinition.updatePermission();
         return "redirect:/manage/permission";
     }
 
@@ -61,6 +67,8 @@ public class PermissionController {
     public ResponseBean del(@PathVariable Integer id) {
         try {
             rolesPermissionService.delPermission(id);
+            //刷新权限
+            customerFilterChainDefinition.updatePermission();
 
         } catch (ServiceException e) {
             return ResponseBean.error(e.getMessage());
@@ -112,6 +120,8 @@ public class PermissionController {
 
     public String permissionUpdate(Permission permission) {
         rolesPermissionService.permissionEdit(permission);
+        //刷新权限
+        customerFilterChainDefinition.updatePermission();
         return "redirect:/manage/permission";
     }
 

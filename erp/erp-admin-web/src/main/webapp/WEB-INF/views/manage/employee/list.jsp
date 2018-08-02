@@ -51,6 +51,7 @@
 
                     <form class="form-inline">
                         <input type="text" name="nameMobile" placeholder="账号或手机号码" class="form-control" value="${param.nameMobile}">
+                        <input type="text" name="state" placeholder="状态" class="form-control" value="${param.state}">
                         <select name="roleId" class="form-control">
                             <option value="">所有角色</option>
                             <c:forEach items="${roleList}" var="roles">
@@ -69,8 +70,10 @@
                 <div class="box-header with-border">
                     <div class="box-tools pull-right" id="add" >
                         <shiro:hasPermission name="employee:add">
-                        <button type="button" class="btn btn-box-tool"   title="Collapse">
-                            <i class="fa fa-plus"></i> 添加员工</button>
+                     <%--   <button type="button" class="btn btn-box-tool"   title="Collapse">--%>
+                            <a href="javascript:;" class="btn btn-success btn-sm">
+                                <i class="fa fa-plus"></i> 添加员工</a>
+                                    <%--</button>--%>
                         </shiro:hasPermission>
                     </div>
                 </div>

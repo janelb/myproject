@@ -32,4 +32,8 @@ public interface TypeMapper {
     int updateByPrimaryKey(Type record);
 
     Type findByName(String typeName);
+
+    /*进行分页*/
+
+    List<Type> findPage();
 }

@@ -55,9 +55,19 @@ public class EmployeeController {
     @GetMapping
     public String EmployList(Model model,
                              @RequestParam(required = false) Integer roleId,
-                             @RequestParam(required = false) String nameMobile
+                             @RequestParam(required = false) String nameMobile,
+                             /*@RequestParam(required = false) Integer state*/
+                             @RequestParam(required = false) String state
                              ){
         Map<String, Object> requestMap  = Maps.newHashMap();
+
+            if(Employee.EMPLOYEE_FROZEN.equals(state)){
+                requestMap.put("state",Employee.EMPLOYEE_STATE_FROZEN);
+            }
+            if(Employee.EMPLOYEE_NORMAL.equals(state)){
+                requestMap.put("state",Employee.EMPLOYEE_STATE_NORMAL);
+            }
+
         requestMap.put("nameMobile",nameMobile);
         requestMap.put("roleId",roleId);
 

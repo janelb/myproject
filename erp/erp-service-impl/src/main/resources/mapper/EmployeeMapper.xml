@@ -225,14 +225,31 @@
                         and (employee.employee_name LIKE CONCAT('%',#{nameMobile},'%')
                         or (employee.tell LIKE CONCAT('%',#{nameMobile},'%')))
                       </if>
+                      <if test="state !=null and state !=''">
+                        and (employee.state = #{state})
+                      </if>
                     </where>
                     ) as temp  on employee.id=temp.id
                   </when>
+
+                  <when test="nameMobile !=null and nameMobile !=''">
+                    <where>
+                    (employee.employee_name LIKE CONCAT('%',#{nameMobile},'%')
+                    or (employee.tell LIKE CONCAT('%',#{nameMobile},'%')))
+                      <if test="state !=null and state !=''">
+                        and (employee.state = #{state})
+                      </if>
+                    </where>
+                  </when>
+
                     <otherwise>
                       <where>
                         <if test="nameMobile !=null and nameMobile !=''">
                           (employee.employee_name LIKE CONCAT('%',#{nameMobile},'%'))
                           or (employee.tell LIKE CONCAT('%',#{nameMobile},'%'))
+                        </if>
+                        <if test="state !=null and state !=''">
+                         employee.state = #{state}
                         </if>
                       </where>
                     </otherwise>

@@ -1,6 +1,7 @@
 package com.libang.erp.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.libang.erp.entity.Parts;
 import com.libang.erp.entity.Type;
 import com.libang.erp.service.PartService;
@@ -11,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author libang
@@ -26,9 +29,13 @@ public class TypeController {
     private PartService partService;
 
     @GetMapping
-    public String list(Model model){
+    public String list(@RequestParam(name = "p" ,defaultValue = "1",required = false) Integer pageNo,
+                         Model model){
+        Map<String ,Object> queryMap = new HashMap<>();
+        PageInfo page = typeService.findPageAndByQueryMap(pageNo,queryMap);
 
         List<Type> typeList = typeService.findAll();
+        model.addAttribute("page",page);
         model.addAttribute("typeList",typeList);
 
         return "type/list";

@@ -141,6 +141,11 @@
 
 
     </select>
+  <!--进行分页-->
+    <select id="findPage" resultType="com.libang.erp.entity.Type">
+      select *from type
+    </select>
+
     <update id="updateByExampleSelective" parameterType="map">
     update type
     <set>

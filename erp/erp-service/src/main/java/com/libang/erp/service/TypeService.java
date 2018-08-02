@@ -1,9 +1,11 @@
 package com.libang.erp.service;
 
 
+import com.github.pagehelper.PageInfo;
 import com.libang.erp.entity.Type;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author libang
@@ -45,4 +47,12 @@ public interface TypeService {
      * @return
      */
     Integer update(Type type);
+
+    /**
+     * 通过pageNo进行分类
+     * @param pageNo
+     * @param queryMap
+     * @return
+     */
+    PageInfo findPageAndByQueryMap(Integer pageNo, Map<String,Object> queryMap);
 }

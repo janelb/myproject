@@ -54,22 +54,26 @@
 
                         </tr>
                         </thead>
-                            <c:forEach items="${typeList}" var="type">
+                          <%--  <c:forEach items="${typeList}" var="type">--%>
+                        <c:forEach items="${page.list}" var="type">
                                 <tbody>
                                 <tr>
                                     <td>${type.id}</td>
                                     <td>${type.typeName}</td>
                                     <td>
 
-                                        <a href="javascript:;" rel="${type.id}" class="del">删除</a>
+                                        <a href="javascript:;" rel="${type.id}" class="del" title="删除"><i class="fa fa-trash"></i></a>
+
                                         <a href="javascript:;" class="update"  td="${type.id}"rel="${type.typeName}"
-                                           data-target="#updateModal">编辑</a>
+                                           data-target="#updateModal" title="编辑"><i class="fa fa-pencil"></i></a>
                                     </td>
                                 </tr>
                                 </tbody>
-                            </c:forEach>
+                        </c:forEach>
+                          <%--  </c:forEach>--%>
 
                     </table>
+                    <ul id="pagination" class="pagination pull-right"></ul>
                 </div>
             </div>
             <!-- /.box -->
@@ -139,12 +143,6 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-
-
-
-
-
-
     <%@ include file="../include/footer.jsp" %>
 
 </div>
@@ -157,6 +155,20 @@
         if(message){
             layer.msg(message);
         }
+
+        /*分页*/
+        $("#pagination").twbsPagination({
+            totalPages : ${page.pages},
+            visiblePages : 5,
+            first : '首页',
+            last:'末页',
+            prev:'上一页',
+            next:'下一页',
+            href:"?p={{number}}"
+        });
+
+
+
         /*修改*/
 
         $(".update").click(function () {
