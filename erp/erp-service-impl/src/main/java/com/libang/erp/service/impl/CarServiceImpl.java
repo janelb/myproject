@@ -64,13 +64,11 @@ public class CarServiceImpl implements CarService {
      */
     @Override
     public Car findCarInfoWithCustomer(String licenceNo) {
-        if (StringUtils.isEmpty(licenceNo)){
-            throw new ServiceException("参数异常");
-        }else{
+
 
             Car car  = carMapper.findCarInfoWithCutomer(licenceNo);
             return car;
-        }
+
     }
 
 

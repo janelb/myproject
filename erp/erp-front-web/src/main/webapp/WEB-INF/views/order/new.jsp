@@ -244,27 +244,32 @@
         //点击查找按钮
         $("#search").click(function () {
             //如果车牌号为空，不打开模态框，
+            var licenseNo = $("#carLisence").val();
+            if(licenseNo){
 
-            $.get("/car/check",{"licenceNo":$("#carLisence").val()}).done(function (res) {
-            //如果车牌号不为空，检查车牌号是否存在，
-                if(res.state == "success"){
-                  //如果车牌号存在，带回车主和车辆信息
-                    $("#userName").text(res.data.customer.userName);
-                    $("#idCard").text(res.data.customer.idCard);
-                    $("#tel").text(res.data.customer.tel);
-                    $("#carType").text(res.data.carType)
-                    $("#carNo").text(res.data.carNo)
-                }else{
-                    /*如果车牌号不存在，打开模态框,新增车辆信息*/
-                    $("#newCarLisence").val($("#carLisence").val());
-                    $("#addUserModal").modal({
-                        show:true,
-                        backdrop:'static'
-                    })
-                }
-            }).error(function () {
-                layer.msg("参数异常");
-            })
+                $.get("/car/check",{"licenceNo":$("#carLisence").val()}).done(function (res) {
+                //如果车牌号不为空，检查车牌号是否存在，
+                    if(res.state == "success"){
+                      //如果车牌号存在，带回车主和车辆信息
+                        $("#userName").text(res.data.customer.userName);
+                        $("#idCard").text(res.data.customer.idCard);
+                        $("#tel").text(res.data.customer.tel);
+                        $("#carType").text(res.data.carType)
+                        $("#carNo").text(res.data.carNo)
+                    }else{
+                        /*如果车牌号不存在，打开模态框,新增车辆信息*/
+                        $("#newCarLisence").val($("#carLisence").val());
+                        $("#addUserModal").modal({
+                            show:true,
+                            backdrop:'static'
+                        })
+                    }
+                }).error(function () {
+                    layer.msg("参数异常");
+                })
+            }else{
+                layer.alert("请填写车牌")
+            }
         })
 
 

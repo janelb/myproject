@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+
+         <h4>{{message}}</h4> 
+         <span v-bind:title="message">鼠标停留</span>
+         <ul>
+            <li v-for="item in address">{{item}}</li>
+         </ul>
+         <br>
+         <span>{{address.length}}</span><br>
+         <span>{{zhoukouLenght}}</span>
+
+         <br>
+         <span v-if="flag">你能看到我吗？</span><br>
+
+         <button v-on:click="tryAgain">点击试试</button><br>
+
+         <span>{{htmlCode}}</span>
+         
+          <span v-html="htmlCode"></span>  <br>
+
+          <input type="text" v-bind:disabled="dis"><br>
+
+          <div>{{fullName}}</div><br>
+          <div>{{firstName}}+{{lastName}}</div>
+            <!-- 进行双向绑定 -->
+          <input type="text" v-model="firstName"><br>
+          <button @click="lastNameClick">lastName</button>
+          <!-- <button @click="firstNameClick">firstName</button><br> -->
+
+    </div>
+    <script src="vue.js"></script>
+    <script>
+      
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                message:"hello",
+                address:['beijing','shanghai','zhoukou'],
+                flag:'',
+                htmlCode:'<span style="color:red">鼠标停留</span>',
+                dis:true,
+                firstName:'jack',
+                lastName:'tom',
+                fullName:""
+               
+        },
+        methods:{
+            tryAgain:function(){
+                this.message="你好";
+                this.address=["郑州","周口","北京"];
+                this.flag=false;
+
+                var ads = this.address;
+                var count = 0;
+               for(var i=0;i<ads.length;i++){
+                    if(ads[i]=='周口'){
+                        count++;
+                    }
+               }
+               this.zhoukouLenght = count;
+
+            },
+            firstNameClick:function(){
+                this.firstName="ajax"
+            },
+            lastNameClick:function(){
+                this.lastName="join"
+            }
+
+        },
+        // computed:{
+        //     fullName:function(){
+        //         return this.firstName+' '+this.lastName;
+        //     }
+        // }
+        // watch:{
+
+        //     firstName:function(val){
+        //         this.fullName=val+' '+this.lastName;
+        //     },
+        //     lastName:function(val){
+        //         this.fullName =this.firstName+" "+val;
+        //     }
+
+        // }
+
+            
+        })
+
+
+       
+
+    
+    
+    </script>
+</body>
+</html>

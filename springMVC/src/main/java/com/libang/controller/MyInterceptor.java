@@ -24,12 +24,12 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
         //判断是否登录
-        HttpSession session = request.getSession();
-        if(session.getAttribute("username")==null){
+      /*  HttpSession session = request.getSession();*/
+      /*  if(session.getAttribute("username")==null){
 
             response.sendRedirect("/login");
 
-        }
+        }*/
         return  true;
 
     }

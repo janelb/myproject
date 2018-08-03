@@ -24,10 +24,25 @@
             <ul class="nav navbar-nav">
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
+                    <%--头像--%>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="/static/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+
+                        <img src="/static/dist/img/user2-160x160.jpg"  class="user-image" alt="User Image">
+
+
+
                         <span class="hidden-xs"> <%-- ${sessionScope.employee.employeeName}--%> <shiro:principal property="employeeName"/> </span>
                     </a>
+
+
+
+
+
+
+
+
+
+
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
@@ -89,6 +104,7 @@
 </div><!-- /.modal -->
 <%--<script src="/static/dist/js/jquery.validate.min.js"></script>--%>
 <script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="/static/plugins/uploader/webuploader.js"></script>
 <script>
     $(function() {
 
@@ -138,6 +154,13 @@
                 },
             }
         })
+
+
+
+
+
+
+
     })
 
 

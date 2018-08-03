@@ -38,7 +38,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">个人设置</h3>
                     <div class="box-tools pull-right">
-                        <a class="btn btn-primary btn-sm" href="/manage/employ"><i class="fa fa-arrow-left"></i> 返回列表</a>
+                        <a class="btn btn-primary btn-sm" href="/order/list"><i class="fa fa-arrow-left"></i> 返回列表</a>
                     </div>
                 </div>
                 <div class="box-body">
@@ -62,6 +62,7 @@
                             <input type="password" name="repassword" value="<shiro:principal property="password"/>"  class="form-control" >
                         </div>
 
+
                     </form>
                 </div>
                 <div class="box-footer">
@@ -80,6 +81,8 @@
 <!-- jQuery 2.2.3 -->
 
 <%@ include file="include/js.jsp" %>
+
+
 
 <script>
     $(function(){
@@ -140,6 +143,11 @@
             }
 
         })
+
+
+
+
+
 
     })
 

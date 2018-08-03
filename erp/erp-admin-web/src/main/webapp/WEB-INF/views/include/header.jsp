@@ -65,7 +65,7 @@
                 <h4 class="modal-title">个人设置</h4>
             </div>
             <div class="modal-body">
-                <form action="" method="post" class="form-horizontal" id="updateForm">
+                <form action="/manage/employ/<shiro:principal property="password"/>/set"  method="get" class="form-horizontal" id="updateForm">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">输入密码:</label>
                         <div class="col-sm-10">
@@ -87,15 +87,16 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<%--<script src="/static/dist/js/jquery.validate.min.js"></script>--%>
+
 <script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script>
     $(function() {
 
         $("#updateBtn").click(function () {
+            $("#updateForm").submit();
 
       /*  window.location.href="/manage/employ/*/<%--${sessionScope.employee.id}/set";--%>
-           window.location.href="/manage/employ/<shiro:principal property="id"/>/set";
+          /* window.location.href="/manage/employ/"+$("#repassword").val()+"/set";*/
         })
 
         $("#updateForm").validate({
@@ -132,7 +133,7 @@
                     required: "请输入密码"
                 },
                 repassword: {
-                    required: "请再次输入密码",
+                    required: "请输入密码",
                     equalTo: "密码错误"
 
                 },

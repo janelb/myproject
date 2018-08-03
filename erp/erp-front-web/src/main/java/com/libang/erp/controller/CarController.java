@@ -44,7 +44,7 @@ public class CarController {
 
     @GetMapping("/check")
     @ResponseBody
-    public ResponseBean checkCarInfo(String licenceNo,Model model){
+    public ResponseBean checkCarInfo(String licenceNo){
 
         Car car = carService.findCarInfoWithCustomer(licenceNo);
 
