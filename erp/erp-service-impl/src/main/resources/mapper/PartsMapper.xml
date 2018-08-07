@@ -254,8 +254,19 @@
 
   </select>
 
+  <!--根据订单ID进行查询partsList-->
+    <select id="findPartaByOrderId" resultType="com.libang.erp.entity.Parts">
+              SELECT
+                      parts.*, order_parts.num
+                  FROM
+                      order_parts
+                  LEFT JOIN parts ON order_parts.parts_id = parts.id
+                  WHERE
+              order_parts.order_id = #{id}
+    </select>
 
-  <update id="updateByExampleSelective" parameterType="map">
+
+    <update id="updateByExampleSelective" parameterType="map">
     update parts
     <set>
       <if test="record.id != null">

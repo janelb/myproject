@@ -63,4 +63,6 @@ public interface PartsMapper {
 
     List<Parts> findBYTypeId(Integer id);
 
+
+    List<Parts> findPartaByOrderId(Integer id);
 }

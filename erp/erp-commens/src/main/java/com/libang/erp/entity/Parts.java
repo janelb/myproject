@@ -49,6 +49,8 @@ public class Parts implements Serializable {
 
     private Type type;
 
+    private Integer num;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -123,6 +125,14 @@ public class Parts implements Serializable {
         this.type = type;
     }
 
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
     @Override
     public String toString() {
         return "Parts{" +
@@ -135,6 +145,7 @@ public class Parts implements Serializable {
                 ", typeId=" + typeId +
                 ", address='" + address + '\'' +
                 ", type=" + type +
+                ", num=" + num +
                 '}';
     }
 }

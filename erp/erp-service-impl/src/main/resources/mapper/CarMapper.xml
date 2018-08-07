@@ -116,7 +116,7 @@
       #{carNo,jdbcType=VARCHAR}, #{customerId,jdbcType=INTEGER}, #{color,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.libang.erp.entity.Car">
+  <insert id="insertSelective" parameterType="com.libang.erp.entity.Car" useGeneratedKeys="true" keyProperty="id">
     insert into car
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -168,7 +168,7 @@
 
 
    <!--通过车牌号查找对应的车辆信息，和车主信息-->
-    <select id="findCarInfoWithCutomer"  resultMap="customerMap">
+    <select id="findCarInfoWithCutomer"  resultMap="customerMap" >
         SELECT
             car.*, customer.user_name,
             customer.id_card,
@@ -179,6 +179,24 @@
         WHERE
 	licence_no = #{licenceNo}
     </select>
+  <!--根据订单Id查找车辆信息-->
+    <select id="findcarByOrderId" resultType="com.libang.erp.entity.Car">
+
+        SELECT car.* from `order` LEFT JOIN car
+          on `order`.car_id = car.id where `order`.id = #{ids}
+
+    </select>
+  <!--通过顾客Id查找对应的汽车集合-->
+  <select id="findCarByCustomerId" resultType="com.libang.erp.entity.Car">
+          SELECT
+                car.*
+            FROM
+                customer
+            LEFT JOIN car ON customer.id = car.customer_id
+            WHERE
+              customer.id = #{id}
+
+  </select>
 
   <resultMap id="customerMap" type="com.libang.erp.entity.Car" extends="BaseResultMap">
     <association property="customer" javaType="com.libang.erp.entity.Customer">

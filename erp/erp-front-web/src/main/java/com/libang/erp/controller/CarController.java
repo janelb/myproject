@@ -33,11 +33,14 @@ public class CarController {
     /*新增车辆信息*/
 
     @PostMapping("/add")
-    public String addCar(Car car , Customer customer, Model model){
+    @ResponseBody
+    public ResponseBean addCar(Car car , Customer customer, Model model){
             carService.addCarIndo(car,customer);
-            model.addAttribute("car",car);
-            model.addAttribute("customer",customer);
-             return "/order/new";
+            car.setCustomer(customer);
+            return ResponseBean.success(car);
+          /*  model.addAttribute("car",car);
+            model.addAttribute("customer",customer);*/
+            /* return "/order/new";*/
     }
 
     //检查车辆信息是否存在

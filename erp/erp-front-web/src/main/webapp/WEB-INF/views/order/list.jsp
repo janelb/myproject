@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -35,10 +36,10 @@
             <div class="box no-border">
                 <div class="box-body">
                     <form class="form-inline">
-                        <input type="text" name="carVIN" placeholder="车牌号码" class="form-control">
-                        <input type="text" name="ownerId" placeholder="车主手机号码" class="form-control">
-                        <input type="hidden" name="startTime" id="startTime">
-                        <input type="hidden" name="endTime" id="endTime">
+                        <input type="text" name="licenceNo" placeholder="车牌号码" value="${param.licenceNo}" class="form-control">
+                        <input type="text" name="tel" placeholder="车主手机号码" value="${param.tel}" class="form-control">
+                        <input type="hidden" name="startTime" id="startTime" value="${param.startTime}">
+                        <input type="hidden" name="endTime" id="endTime" value="${param.endTime}">
                         <input type="text" class="form-control" id="time" placeholder="下单日期选择">
                         <button class="btn btn-default">搜索</button>
                     </form>
@@ -49,8 +50,8 @@
             <div class="box">
                 <div class="box-body">
                     <ul class="nav nav-tabs">
-                        <li id="undone" class="${type == 'pay' ? '' : 'active'}"><a href=""  data-toggle='tab'>未完成订单</a></li>
-                        <li id="history" class="${type == 'pay' ? 'active' : ''}"><a href="" data-toggle='tab'>已完成订单</a></li>
+                        <li id="undone" class="${type == '' ? '' : 'active'}"><a href="/order/undone/list">未完成订单</a></li>
+                        <li id="done" class="${type == 'done' ? 'active' : ''}"><a href="/order/done/list">已完成订单</a></li>
                     </ul>
                     <table class="table">
                         <thead>
@@ -58,31 +59,29 @@
                             <th>订单号</th>
                             <th>车主姓名</th>
                             <th>车主电话</th>
+                            <th>车牌号</th>
                             <th>车型</th>
                             <th>状态</th>
                             <th>订单金额</th>
+                            <th>订单日期</th>
                             <th>#</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <c:forEach items="${page.list}" var="order">
                         <tr>
-                            <td>100198763</td>
-                            <td>王富贵</td>
-                            <td>15937911234</td>
-                            <td>奔驰S600</td>
-                            <td>已完成</td>
-                            <td>1200</td>
-                            <td><a href="#" class="label label-primary">详情</a></td>
+                            <td>${order.id}</td>
+                            <td>${order.customer.userName}</td>
+                            <td>${order.car.licenceNo}</td>
+                            <td>${order.customer.tel}</td>
+                            <td>${order.car.carType}</td>
+
+                            <td>${order.stateName}</td>
+                            <td>${order.orderMoney}</td>
+                            <td><fmt:formatDate value="${order.createTime}" pattern="yyyy-MM-dd" /></td>
+                            <td><a href="/order/${order.id}/detail" class="label label-primary">详情</a></td>
                         </tr>
-                        <tr>
-                            <td>100198763</td>
-                            <td>王富贵</td>
-                            <td>15937911234</td>
-                            <td>奔驰S600</td>
-                            <td>已完成</td>
-                            <td>1200</td>
-                            <td><a href="#" class="label label-primary">详情</a></td>
-                        </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <ul id="pagination" class="pagination pull-right"></ul>
@@ -104,19 +103,25 @@
 <%@ include file="../include/js.jsp" %>
 <script>
     $(function(){
+                var startDate = "${param.startTime}";
+                var endDate = "${param.endTime}";
+
+                if(startDate && endDate) {
+                    $('#time').val(startDate + " / " + endDate);
+                }
         $("#pagination").twbsPagination({
-            totalPages : 5,
-            visiblePages : 7,
+            totalPages : ${page.pages},
+            visiblePages : 5,
             first : '首页',
             last:'末页',
             prev:'上一页',
             next:'下一页',
-            href:"#"
+            href:"/order/undone/list?p={{number}}&startTime=" + startDate + "&endTime=" + endDate + "&licenceNo=" + encodeURIComponent('${param.licenceNo}') + "&tel=${param.tel}"
         });
 
         var locale = {
             "format": 'YYYY-MM-DD',
-            "separator": " - ",//
+            "separator": " - ",
             "applyLabel": "确定",
             "cancelLabel": "取消",
             "fromLabel": "起始时间",
@@ -128,12 +133,7 @@
             "firstDay": 1
         };
 
-        var startDate = "";
-        var endDate = "";
 
-        if(startDate && endDate) {
-            $('#time').val(startDate + " / " + endDate);
-        }
 
 
         $('#time').daterangepicker({

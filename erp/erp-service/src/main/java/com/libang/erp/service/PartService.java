@@ -90,4 +90,10 @@ public interface PartService {
     List<Parts> findByTypeId(Integer id);
 
 
+    /**
+     * 根据订单ID查询配件列表
+     * @param id
+     * @return
+     */
+    List<Parts> findPartsByOrderId(Integer id);
 }

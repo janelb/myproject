@@ -29,4 +29,8 @@ public interface CarMapper {
     int updateByPrimaryKey(Car record);
 
     Car findCarInfoWithCutomer(String licenceNo);
+
+    Car findcarByOrderId(Integer id);
+
+    List<Car> findCarByCustomerId(Integer id);
 }

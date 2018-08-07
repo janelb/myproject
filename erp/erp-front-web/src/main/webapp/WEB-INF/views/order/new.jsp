@@ -20,7 +20,7 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
-<div class="wrapper">
+<div class="wrapper" id="app">
     <%@ include file="../include/header.jsp" %>
     <jsp:include page="../include/sider.jsp">
         <jsp:param name="menu" value="order"/>
@@ -47,31 +47,33 @@
                         <tr>
                             <td class="td_title">车牌号:</td>
                             <td style="width: 280px">
-                                <input type="text" id="carLisence" name="licenceNo" class="form-control" value="${car.licenceNo}"/>
+                                <input type="text" id="carLisence" name="licenceNo" class="form-control" v-model="car.licenceNo"/>
                             </td>
                             <td >
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-info btn-flat" id="search"><i class="fa fa-search"></i></button>
+                                <button type="button" class="btn btn-info btn-flat" id="search"  @click="search"><i class="fa fa-search"></i></button>
                             </span>
                             </td>
                             <td class="td_title">客户姓名:</td>
-                            <td id="userName">${customer.userName}</td>
+                            <td id="userName">{{customer.userName}}</td>
                             <td class="td_title">身份证号:</td>
-                            <td id="idCard">${customer.idCard}</td>
+                            <td id="idCard">{{customer.idCard}}</td>
                         </tr>
                         <tr>
                             <td class="td_title">车主电话:</td>
-                            <td id="tel">${customer.tel}</td>
+                            <td id="tel">{{customer.tel}}</td>
                             <td></td>
                             <td class="td_title">车型:</td>
-                            <td id="carType">${car.carType}</td>
+                            <td id="carType">{{car.carType}}</td>
                             <td class="td_title">车辆识别码:</td>
-                            <td id="carNo">${car.carNo}</td>
+                            <td id="carNo">{{car.carNo}}</td>
                         </tr>
                     </table>
 
                 </div>
             </div>
+
+
 
 
             <div class="box">
@@ -81,12 +83,9 @@
 
                 <div class="box-body">
                     <div class="form-inline">
-                        <select class="form-control" name="" id="">
+                        <select class="form-control" name="" id=""  v-model="serviceType">
                             <option value="">请选择项目</option>
-                            <option value="">小保养-2工时</option>
-                            <option value="">大保养-3工时</option>
-                            <option value="">轮胎更换-1工时</option>
-                            <option value="">钣金喷漆-2工时</option>
+                            <option  v-for="item in serviceTypes"  :value="item">{{item.serviceName}}-{{item.serviceHour}} 工时</option>
                         </select>
                         <button class="btn btn-info">选择</button>
                     </div>
@@ -100,20 +99,25 @@
                         </tr>
                         </thead>
                         <tbody id="addTr">
-                        <tr>
-                            <td>xn001</td>
-                            <td>小保养</td>
-                            <td>150</td>
+                        <tr v-if="serviceType.serviceNo">
+                            <td>{{serviceType.serviceNo}}</td>
+                            <td>{{serviceType.serviceName}}</td>
+                            <td>{{serviceType.serviceHour*50}}</td>
                         </tr>
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="4" class="td_title">小计 ：150元</td>
+                            <td colspan="4" class="td_title">小计 :{{hourFee}}元</td>
                         </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
+
+
+
+
+
 
             <div class="box">
                 <div class="box-header">
@@ -123,52 +127,61 @@
                 <div class="box-body">
 
                     <div class="form-inline">
-                        <select class="form-control" name="type" id="type">
+                        <select class="form-control" name="type" id="type" @change="changeType" v-model="partsType">
                             <option value="">请选择配件类型</option>
-                            <option value="">机油</option>
-                            <option value="">机滤</option>
-                            <option value="">轮胎</option>
-                            <option value="">喷漆</option>
+                            <option v-for="item in partsTypes" :value="item">{{item.typeName}}</option>
+
                         </select>
-                        <select class="form-control" name="parts" id="parts">
+
+
+                        <select class="form-control" name="parts" v-model="chooseParts">
                             <option value="">请选择配件</option>
-                            <option value="">嘉实多机油 1L</option>
-                            <option value="">嘉实多机油 4L</option>
-                            <option value="">长城机油 1L</option>
+                            <option v-for="item in partsList" :value="item" >{{item.partsName}}- {{item.partsNo}}</option>
                         </select>
-                        <button class="btn btn-info">选择</button>
+                        <button class="btn btn-info"  @click="addParts">选择</button>
                     </div>
+                    <table class="table table-bordered " style="border-width: 2px;">
                     <br>
-                    <table class="table table-bordered " style="border-width: 2px;" id="partsInfoForm">
+                       <%-- id="partsInfoForm"--%>
                         <thead>
                         <tr>
                             <th>编号</th>
                             <th>名称</th>
                             <th>单价</th>
-                            <th>数量</th>
+                            <th><span style="margin-left: 20px">数量</span></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>xn001</td>
-                            <td>嘉实多润滑油</td>
-                            <td>50</td>
-                            <td><button type="button" class="btn btn-box-tool" id="minus"><i class="fa fa-minus"></i></button>
-                                <span>1</span>
-                                <button type="button" class="btn btn-box-tool" id="plus"><i class="fa fa-plus"></i></button></td>
+                        <tr v-for="item in choosePartsList">
+                            <td>{{item.partsNo}}</td>
+                            <td>{{item.partsName}}</td>
+                            <td>{{item.salePrice}}</td>
+                            <td><button type="button" class="btn btn-box-tool" id="minus" @click="minus(item)"><i class="fa fa-minus"></i></button>
+                                <input type="text" class="num" v-model="item.num">
+                                <button type="button" class="btn btn-box-tool" id="plus" @click="plus(item)"><i class="fa fa-plus"></i></button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" @click="delParts(item)"><li class="fa fa-minus"></li></button>
+                            </td>
+
                         </tr>
 
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="4" class="td_title">小计 ：200元</td>
+                            <td colspan="5" class="td_title">小计 ：{{partsSum}}元</td>
                         </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
+            <div class="box">
+                <div class="box-header">
+                    <h4>总计： {{fee}} 元</h4>
+                </div>
+            </div>
 
-            <button class="btn btn-info btn-block btn-lg">下单</button>
+            <button class="btn btn-info btn-block btn-lg" @click="newOrder">下单</button>
 
             <div class="modal fade" tabindex="-1" role="dialog" id="addUserModal">
                 <div class="modal-dialog" role="document">
@@ -182,7 +195,7 @@
                             <form id="addCarForm" action="/car/add" method="post" class="form">
                                 <div class="form-group">
                                     <label>车牌号码：</label>
-                                    <input type="text" id="newCarLisence" name="licenceNo" class="form-control">
+                                    <input type="text" id="newCarLisence" name="licenceNo" v-model="car.licenceNo" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>车辆识别码：</label>
@@ -212,7 +225,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" id="addCar">添加</button>
+                            <button type="button" class="btn btn-primary" id="addCar" @click="addCarInfo">添加</button>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
@@ -225,22 +238,247 @@
     </div>
     <!-- /.content-wrapper -->
 
-
     <%@ include file="../include/footer.jsp" %>
 
 </div>
 <!-- ./wrapper -->
 <%@ include file="../include/js.jsp" %>
+
+<script src="/static/dist/js/vue.js"></script>
 <script>
     
     $(function () {
 
-        var message="${message}";
-        if(message){
-            alert(message);
-        }
+        /*使用vuejs*/
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                car:{},
+                customer :{},
+                serviceTypes:[],
+                partsTypes:[],
+                serviceType:{},
+                partsType:'',
+                partsList:[],
+                choosePartsList:[],
+                chooseParts:{}
+            },
+            methods:{
+                search:function(){
+                   //如果车牌号为空，不打开模态框，
+                    var licenceNo =this.car.licenceNo;
+                    if(licenceNo){
+                        $.get("/car/check",{"licenceNo":licenceNo}).done(function (res) {
+                                if(res.state == 'success'){
+                                    vm.car = res.data;
+                                    vm.customer = res.data.customer;
+                                }else{
+                                    /*如果车牌号不存在则打开模态框*/
+                                    $("#addUserModal").modal({
+                                        show:true,
+                                        backdrop:'static'
+                                    })
+
+                                }
+                        }).error(function () {
+                            layer.msg("参数异常");
+                        })
+
+                    }else{
+
+                        layer.alert("请填写车牌")
+                    }
+                },
+
+                /*模态框添加数据*/
+                addCarInfo:function(){
+                    $.post("/car/add",$("#addCarForm").serialize()).done(function (res) {
+                        if(res.state == "success"){
+                            vm.car=res.data;
+                            vm.customer = res.data.customer;
+                            $("#addUserModal").modal("hide");
+                        }
+                    }).error(function(){
+                        layer.msg("系统异常");
+                    })
+
+                },
 
 
+
+                /*选择添加配件*/
+
+                addParts:function(){
+                    var addFlag = false;
+                    for(var i = 0; i < this.choosePartsList.length; i++) {
+                        if(this.chooseParts == this.choosePartsList[i]) {
+                            addFlag = true;
+                            this.choosePartsList[i].num = this.choosePartsList[i].num + 1;
+                            break;
+                        }
+                    }
+                    if(!addFlag) {
+                        this.choosePartsList.push(this.chooseParts);
+                    }
+
+                },
+
+
+
+                /*选择配件类型*/
+                changeType:function(){
+                    if(this.partsType.id){
+                        $.get("/order/" + this.partsType.id +"/parts").done(function (response) {
+                            for(var i = 0; i < response.data.length ; i++){
+                                response.data[i].num = 1;
+                            }
+                            vm.partsList = response.data;
+                        }).error(function(err){
+                            layer.msg("系统异常");
+                        })
+                    }
+                },
+
+                /*减少配件数量*/
+                minus:function(item){
+                    if(item.num){
+                        item.num --;
+                    }
+                },
+                /*增加配件数量*/
+                plus:function(item){
+                    item.num ++;
+                },
+                /*删除配件*/
+
+                delParts:function(item){
+                    var index = this.choosePartsList.indexOf(item);
+                    this.choosePartsList.splice(index,1);
+                },
+
+                /*下订单进行验证*/
+                newOrder:function(){
+                    if(!this.car.id){
+                        layer.msg("请输入车辆信息");
+                        return;
+                    };
+
+                    if(!this.serviceType.id){
+
+                        layer.msg("请选择服务项目类型");
+                        return;
+                    };
+
+                    if(!this.choosePartsList.length){
+                        layer.msg("请选择配件");
+                        return;
+                    }
+                    /*提交订单时传递数据*/
+                    var partsList = [];
+                    for(var i = 0 ; i < this.choosePartsList.length;i++){
+                        var parts = {};
+                        parts.id = this.choosePartsList[i].id;
+                        parts.num=this.choosePartsList[i].num;
+                        partsList.push(parts);
+                    }
+
+                    /*ajax提交订单*/
+                    $.ajax({ // axios
+                        type:"post",
+                        url:"/order/new",
+                        data:{
+                            json: JSON.stringify({
+                                "carId" :vm.car.id,
+                                "serviceTypeId":vm.serviceType.id,
+                                "fee":vm.fee,
+                                "partsList":partsList
+                            })
+                        },
+                        success: function(json){
+                            if(json.state == "success") {
+                                window.location.href = "/order/undone/list";
+                            }
+                        }
+
+                    })
+
+                },
+
+            },
+
+
+
+
+
+            /*进行函数计算*/
+            computed:{
+                /*配件费用合计*/
+
+                partsSum:function(){
+                    var sum = 0;
+                    var chooseParts
+                    for(var i = 0 ; i< this.choosePartsList.length; i++){
+                        chooseParts = this.choosePartsList[i];
+                        sum += chooseParts.salePrice * chooseParts.num;
+                    }
+                    return sum;
+                },
+
+                /*服务类型费用计算*/
+                hourFee:function(){
+                    return this.serviceType.serviceHour ? this.serviceType.serviceHour*50 : 0;
+                },
+
+                /*总费用*/
+                fee:function(){
+                    return this.hourFee + this.partsSum;
+                }
+            },
+
+
+            /*使用钩子在加载页面是发起ajax请求*/
+            mounted:function(){
+                /*服务类型列表*/
+                $.get("/order/service/types").done(function(response){
+                    vm.serviceTypes = response.data;
+                }).error(function(err){
+                    layer.msg("系统异常");
+                });
+
+                /*配件类型*/
+                $.get("/order/parts/types").done(function(response){
+                    vm.partsTypes = response.data;
+
+                }).error(function(err){
+                    layer.msg("系统异常");
+                });
+
+            }
+
+
+
+
+
+
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       /*
         //点击查找按钮
         $("#search").click(function () {
             //如果车牌号为空，不打开模态框，
@@ -257,7 +495,7 @@
                         $("#carType").text(res.data.carType)
                         $("#carNo").text(res.data.carNo)
                     }else{
-                        /*如果车牌号不存在，打开模态框,新增车辆信息*/
+                        /!*如果车牌号不存在，打开模态框,新增车辆信息*!/
                         $("#newCarLisence").val($("#carLisence").val());
                         $("#addUserModal").modal({
                             show:true,
@@ -273,12 +511,12 @@
         })
 
 
-        /*提交模态框*/
+        /!*提交模态框*!/
         $("#addCar").click(function () {
             $("#addCarForm").submit();
         })
 
-
+*/
 
 
     })

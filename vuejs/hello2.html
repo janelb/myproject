@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app1">
+    <p>message : "{{message}}"</p><br>
+    <p>remessage:"{{remessage}}"</p><br>
+    <p>{{now}}</p><br>
+    <div>{{fullName}}</div>
+
+    </div>
+    <script src="vue.js"></script>
+    <script>
+    var vm = new Vue({
+        
+        el:"#app1",
+        data:{
+            message:"libang",
+            fistName:'tom',
+            lastName:'jack'
+        },
+        computed:{
+            remessage:function(){
+                return this.message.split('').reverse().join('');
+            },
+            now:function(){
+                return Date.now().toString;
+            },
+            // fullName:function(){
+            //     return this.fistName+"  "+this.lastName;
+            // }
+                fullName:{
+                    get:function(){
+                        return this.fistName+"  "+this.lastName;
+                    },
+                    set:function(newValue){
+                        var names = newValue.split(' ');
+                        this.fistName=names[0];
+                        this.lastName=names[names.length-1]
+                    }
+                   
+                }
+                
+            
+
+        }
+
+
+    })
+    
+    
+    
+    </script>
+</body>
+</html>

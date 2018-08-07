@@ -184,5 +184,19 @@ public class PartServiceImpl implements PartService {
         return partsList;
     }
 
+    /**
+     * 根据订单ID查询配件列表
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Parts> findPartsByOrderId(Integer id) {
+
+        List<Parts> partsList = partsMapper.findPartaByOrderId(id);
+
+        return partsList;
+    }
+
 
 }
