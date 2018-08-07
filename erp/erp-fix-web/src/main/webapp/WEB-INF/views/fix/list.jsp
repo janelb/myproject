@@ -35,13 +35,14 @@
 
         <!-- Main content -->
         <section class="content">
+            <c:forEach items="${page.list}" var="order">
 
             <!-- Default box -->
             <div class="box">
                 <div class="box-body">
                     <div class="panel panel-info">
                         <!-- Default panel contents -->
-                        <div class="panel-heading">订单号：10011 - 大众CC - 保养 <button class="btn btn-success btn-sm pull-right">任务领取</button> </div>
+                        <div class="panel-heading">订单号:${order.id} - ${order.car.carType} - 保养 <button class="btn btn-success btn-sm pull-right">任务领取</button> </div>
                         <!-- List group -->
                         <ul class="list-group">
                             <li class="list-group-item">机油-嘉实多1L * 2</li>
@@ -49,33 +50,10 @@
                             <li class="list-group-item">空调滤芯</li>
                         </ul>
                     </div>
-
-                    <div class="panel panel-info">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading">订单号：10012 - 大众CC - 保养 <button class="btn btn-success btn-sm pull-right">任务领取</button> </div>
-                        <!-- List group -->
-                        <ul class="list-group">
-                            <li class="list-group-item">机油-嘉实多1L * 2</li>
-                            <li class="list-group-item">机油滤芯 * 1</li>
-                            <li class="list-group-item">空调滤芯</li>
-                        </ul>
-                    </div>
-
-                    <div class="panel panel-info">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading">订单号：10013 - 大众CC - 保养 <button class="btn btn-success btn-sm pull-right">任务领取</button> </div>
-                        <!-- List group -->
-                        <ul class="list-group">
-                            <li class="list-group-item">机油-嘉实多1L * 2</li>
-                            <li class="list-group-item">机油滤芯 * 1</li>
-                            <li class="list-group-item">空调滤芯</li>
-                        </ul>
-                    </div>
-
-                    <!-- /.box-body -->
-
                 </div>
-                <!-- /.box -->
+            </div>
+            </c:forEach>
+
 
         </section>
         <!-- /.content -->
@@ -91,13 +69,13 @@
 <script>
     $(function(){
         $("#pagination").twbsPagination({
-            totalPages : 5,
-            visiblePages : 7,
+            totalPages :${page.pages},
+            visiblePages : 5,
             first : '首页',
             last:'末页',
             prev:'上一页',
             next:'下一页',
-            href:"#"
+            href:"?p={{number}}"
         });
 
         var locale = {

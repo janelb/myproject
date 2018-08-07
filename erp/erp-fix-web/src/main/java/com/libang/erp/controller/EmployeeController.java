@@ -154,7 +154,7 @@ public class EmployeeController {
 
     @GetMapping("/home")
     public String home(){
-        return "fix/list";
+        return "home";
     }
 
 
@@ -168,7 +168,7 @@ public class EmployeeController {
         }
         //是否被记住
         if(subject.isRemembered()){
-            return "fix/list";
+            return "home";
         }
         return "login";
     }

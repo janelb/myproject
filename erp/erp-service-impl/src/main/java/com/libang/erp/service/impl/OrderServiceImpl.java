@@ -244,6 +244,14 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    /*==========================维修组===================================*/
+
+
+
+
+
+    /*==============================================================================*/
+
     /*添加订单的关联关系*/
     private void addOrderParts(Integer orderId,List<PartsVo> partsVoList){
         if(partsVoList !=null && partsVoList.size()>0){
@@ -257,6 +265,10 @@ public class OrderServiceImpl implements OrderService {
         }
 
     }
+
+
+
+
 
 
 }
