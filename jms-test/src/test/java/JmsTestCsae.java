@@ -61,9 +61,8 @@ public class JmsTestCsae {
     public void messaegCustomer() throws JMSException, IOException {
 
         //创建连接工厂
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConnectionFactory.DEFAULT_BROKER_URL);
+   /*     ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConnectionFactory.DEFAULT_BROKER_URL);*/
 
-/*
         //自定义重置参数
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
 
@@ -74,7 +73,7 @@ public class JmsTestCsae {
         redeliveryPolicy.setInitialRedeliveryDelay(2000);
         //设置每次重置延迟时间，单位毫秒
         redeliveryPolicy.setRedeliveryDelay(2000);
-        connectionFactory.setRedeliveryPolicy(redeliveryPolicy);*/
+        connectionFactory.setRedeliveryPolicy(redeliveryPolicy);
 
 
         //创建并启动连接
@@ -95,7 +94,7 @@ public class JmsTestCsae {
                     TextMessage textMessage = (TextMessage) message;
                     System.out.println(textMessage.getText());
 
-                    //为使报错添加条件
+                    //为使报错添加条件,测试重试机制
                     if("hello1".equals(textMessage.getText())){
                         throw new JMSException("error");
                     }
