@@ -36,8 +36,6 @@ public class FixController {
         //2.根据订单信息查询所有车辆信息，顾客信息
         //3.根据订单信息查询对应的配件信息
         model.addAttribute("page",page);
-
-
         return "fix/list";
     }
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+    <!--配置扫描器-->
+    <context:component-scan base-package="com.libang"/>
+    <!--开启基于注解的JMS接收模式-->
+    <bean id="jmsListenerContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="concurrency" value="5-15"/>
+        <!--监听发布/订阅模式-->
+        <property name="pubSubDomain" value="true"/>
+    </bean>
+    <jms:annotation-driven container-factory="jmsListenerContainerFactory"/>
+
+
+    <bean id="jmsQueueListenerContainerFactory"
+          class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="concurrency" value="5-15"/>
+    </bean>
+
+
+    <!--配置ActiveMQ ConnectionFactory-->
+    <bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+    </bean>
+    <!--Spring适配的连接工厂-->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" ref="activeMQConnectionFactory"/>
+    </bean>
+
+    <!--配置JMSTemplate-->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <!--监听对象-->
+        <property name="defaultDestination" ref="destination"/>
+    </bean>
+    <!--Topic对象-->
+    <bean id="destination" class="org.apache.activemq.command.ActiveMQTopic">
+        <!--主题名称-->
+        <constructor-arg name="name" value="spring-topic"/>
+    </bean>
+
+
+</beans>

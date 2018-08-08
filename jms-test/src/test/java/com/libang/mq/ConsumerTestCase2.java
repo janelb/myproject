@@ -20,8 +20,8 @@ import java.io.IOException;
  * @date 2018/8/7 19:41
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring-consumer.xml")
-public class ConsumerTestCase {
+@ContextConfiguration(locations = "classpath:spring-consumer2.xml")
+public class ConsumerTestCase2 {
 
     @Autowired
     JmsTemplate jmsTemplate;
@@ -45,8 +45,8 @@ public class ConsumerTestCase {
 
     @Test
     public void testReadMessage() throws IOException {
-        System.out.println("spring start....");
         System.in.read();
+        System.out.println("spring start....");
     }
 
 

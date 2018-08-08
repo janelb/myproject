@@ -6,18 +6,26 @@
     <!--配置ActiveMQ ConnectionFactory-->
     <bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
         <property name="brokerURL" value="tcp://localhost:61616"/>
+
     </bean>
     <!--配置spring连接工厂-->
     <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
         <property name="targetConnectionFactory" ref="activeMQConnectionFactory"/>
     </bean>
 
+
+
+
     <!--配置JMSTemplate-->
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="connectionFactory"/>
         <!--位置目的地名称-->
         <property name="defaultDestinationName" value="consumer-queue"/>
+
     </bean>
+
+
+
     <!--配置消费者监听器,自动读取消息-->
     <bean id="consumerListener" class="com.libang.mq.ConsumterListener"/>
     <bean id="consumerListener2" class="com.libang.mq.ConsumterListener2"/>
