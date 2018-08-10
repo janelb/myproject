@@ -200,26 +200,36 @@ public class EmployeeController {
                 //进行登录
             subject.login(usernamePasswordToken);
 
-            if(StringUtils.isNotEmpty(remeber)){
+            if(subject.hasRole("role:manage")){
 
-                Cookie cookie = new Cookie("tell",tell);
-                cookie.setDomain("localhost");
-                cookie.setPath("/");
-                cookie.setMaxAge(60*60*24*7);
-                cookie.setHttpOnly(true);
-                response.addCookie(cookie);
+                    if(StringUtils.isNotEmpty(remeber)){
 
+                        Cookie cookie = new Cookie("tell",tell);
+                        cookie.setDomain("localhost");
+                        cookie.setPath("/");
+                        cookie.setMaxAge(60*60*24*7);
+                        cookie.setHttpOnly(true);
+                        response.addCookie(cookie);
+
+                    }
+                    //跳转到登录界面请求
+
+                    SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+                    String url = "/manage/employ/home";
+                    if(savedRequest !=null ){
+                        // 获得callback的url
+                       url = savedRequest.getRequestUrl();
+                    }
+
+                    return "redirect:"+url;
+            }else{
+                redirectAttributes.addFlashAttribute("message","对不起您没有访问该系统的权限，请联系管理员！！");
             }
-            //跳转到登录界面请求
 
-            SavedRequest savedRequest = WebUtils.getSavedRequest(request);
-            String url = "/manage/employ/home";
-            if(savedRequest !=null ){
-                // 获得callback的url
-               url = savedRequest.getRequestUrl();
-            }
 
-            return "redirect:"+url;
+
+
+
 
             }catch(UnknownAccountException | IncorrectCredentialsException e){
                     redirectAttributes.addFlashAttribute("message","用户名或密码错误");

@@ -1,0 +1,80 @@
+package com.libang.erp.entity;
+
+import java.io.Serializable;
+
+/**
+ * @author 
+ */
+public class FixOrderParts implements Serializable {
+    private Integer id;
+
+    private Integer orderId;
+
+    private Integer partsId;
+
+    private String partsNo;
+
+    private String partsName;
+
+    private Integer partsNum;
+
+    private String typeName;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public Integer getPartsId() {
+        return partsId;
+    }
+
+    public void setPartsId(Integer partsId) {
+        this.partsId = partsId;
+    }
+
+    public String getPartsNo() {
+        return partsNo;
+    }
+
+    public void setPartsNo(String partsNo) {
+        this.partsNo = partsNo;
+    }
+
+    public String getPartsName() {
+        return partsName;
+    }
+
+    public void setPartsName(String partsName) {
+        this.partsName = partsName;
+    }
+
+    public Integer getPartsNum() {
+        return partsNum;
+    }
+
+    public void setPartsNum(Integer partsNum) {
+        this.partsNum = partsNum;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+}

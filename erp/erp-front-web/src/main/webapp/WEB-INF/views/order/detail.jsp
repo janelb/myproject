@@ -150,7 +150,7 @@
                                 <td>${parts.partsNo}</td>
                                 <td>${parts.partsName}</td>
                                 <td>${parts.salePrice}</td>
-                                <td>${parts.num}</td>
+                                <td>${parts.orderParts.num}</td>
                             </tr>
                         </c:forEach>
 
@@ -183,6 +183,7 @@
 <script>
     $(function() {
         var orderId = ${order.id};
+
         //删除客户
         $("#delBtn").click(function(){
             layer.confirm("确定要删除吗?",function (index) {
@@ -194,13 +195,14 @@
         $("#printBtn").click(function(){
             window.print();
         });
-        /*订单下发*/
+
+            /*订单下发*/
         $("#transBtn").click(function(){
             layer.confirm("你确定要下发订单吗？",function(){
              /*   layer.close(index);*/
                 $.get("/order/"+orderId+"/trans").done(function (res) {
                     if(res.state == "success"){
-                        layer.msg("订单生成并下发！等=待维修中!",{time:2000,icon:1},function () {
+                        layer.msg("订单生成并下发！等待维修中!",{time:2000,icon:1},function () {
                                 history.go(0);
                         })
                     }else{
@@ -211,6 +213,8 @@
                 })
             })
         })
+
+
 
 
 

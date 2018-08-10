@@ -13,11 +13,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
 import javax.jws.WebParam;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +35,9 @@ import java.util.Map;
 @RequestMapping("/order")
 @Controller
 public class OrderController {
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
     @Autowired
     private OrderService orderService;
 
@@ -106,8 +114,11 @@ public class OrderController {
 
     public ResponseBean orderAdd(String json) {
 
+
+
         Gson gson = new Gson();
         OrderVo orderVo = gson.fromJson(json, OrderVo.class);
+
         /*创建当前主题对象*/
         Subject subject = SecurityUtils.getSubject();
         /*根据当前主题对象获取当前登录对象*/
@@ -211,6 +222,7 @@ public class OrderController {
 
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrder(order);
+
         orderInfoVo.setServiceType(serviceType);
         orderInfoVo.setPartsList(partsList);
 
@@ -243,6 +255,8 @@ public class OrderController {
     @GetMapping("/{id:\\d+}/trans")
     @ResponseBody
     public ResponseBean orderTrans(@PathVariable Integer id) {
+
+
 
         /*订单下发修改订单的状态*/
         try {

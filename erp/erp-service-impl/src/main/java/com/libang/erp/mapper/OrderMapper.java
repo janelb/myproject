@@ -5,6 +5,7 @@ import com.libang.erp.entity.OrderExample;
 import java.util.List;
 import java.util.Map;
 
+import com.libang.erp.entity.Type;
 import org.apache.ibatis.annotations.Param;
 
 public interface OrderMapper {
@@ -36,4 +37,13 @@ public interface OrderMapper {
     List<Order> findUndonePageByParam(Map<String,Object> orderMap);
 
     Order findOrderWithCustomerById(Integer id);
+
+
+    /**
+     *
+     * 根据订单Id查询配件类型列表
+     * @param id
+     * @return
+     */
+    List<Type> findTypeByOrderId(Integer id);
 }

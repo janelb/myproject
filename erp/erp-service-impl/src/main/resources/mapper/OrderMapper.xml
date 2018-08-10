@@ -242,6 +242,7 @@
             car.licence_no,
             car.car_no,
             car.customer_id,
+            car.color,
             customer.user_name,
             customer.id_card,
             customer.tel
@@ -254,9 +255,22 @@
 
   </select>
 
+<!--根据订单Id查询配件类型列表-->
+    <select id="findTypeByOrderId" resultType="com.libang.erp.entity.Type">
+
+        SELECT
+            type.*
+        FROM
+            order_parts
+        LEFT JOIN parts ON order_parts.parts_id = parts.id
+        LEFT JOIN type ON parts.type_id = type.id
+        WHERE
+	    order_parts.order_id = #{id}
+
+    </select>
 
 
-  <resultMap id="orderMapWithDetail" type="com.libang.erp.entity.Order" extends="BaseResultMap">
+    <resultMap id="orderMapWithDetail" type="com.libang.erp.entity.Order" extends="BaseResultMap">
       <association property="car" javaType="com.libang.erp.entity.Car">
         <id property="id" column="car_id"/>
         <result property="carType" column="car_type"/>

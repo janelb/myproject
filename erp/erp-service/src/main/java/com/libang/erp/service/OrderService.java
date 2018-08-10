@@ -88,4 +88,10 @@ public interface OrderService {
     void transOrder(Integer id) throws ServiceException;
 
 
+    /**
+     *
+     * 根据维修部门领取任务，修改前台订单状态
+     * @param json
+     */
+    void editState(String json);
 }

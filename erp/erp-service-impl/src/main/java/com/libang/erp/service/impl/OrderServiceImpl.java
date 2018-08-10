@@ -2,6 +2,8 @@ package com.libang.erp.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.libang.erp.dto.OrderDto;
+import com.libang.erp.dto.OrderStateDto;
 import com.libang.erp.entity.*;
 import com.libang.erp.exception.ServiceException;
 import com.libang.erp.mapper.*;
@@ -9,12 +11,24 @@ import com.libang.erp.service.OrderService;
 import com.libang.erp.util.Constant;
 import com.libang.erp.vo.OrderVo;
 import com.libang.erp.vo.PartsVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.google.gson.Gson;
 
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 import java.util.List;
 import java.util.Map;
+
+
+
 
 /**
  * @author libang
@@ -40,6 +54,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderEmployeeMapper orderEmployeeMapper;
+
+    @Autowired
+    private PartsMapper partsMapper;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
+    private Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
+
     /**
      * 查询所有服务类型列表
      *
@@ -225,6 +247,7 @@ public class OrderServiceImpl implements OrderService {
      * @param id
      */
     @Override
+    @Transactional(rollbackFor = RuntimeException.class)
     public void transOrder(Integer id)throws ServiceException {
         //1.查询订单
         Order order = orderMapper.selectByPrimaryKey(id);
@@ -242,9 +265,88 @@ public class OrderServiceImpl implements OrderService {
         System.out.println("222"+order.getState());
         orderMapper.updateByPrimaryKeySelective(order);
 
+
+        /*存入队列*/
+
+        sendOrderInfoToMq(id);
+
+    }
+
+
+    /**
+     * 根据维修部门领取任务，解析json数据，修改前台订单状态
+     *
+     * @param json
+     */
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void editState(String json) {
+        OrderStateDto orderStateDto = new Gson().fromJson(json,OrderStateDto.class);
+        //根据订单ID获取订单
+        Order order = orderMapper.selectByPrimaryKey(orderStateDto.getOrderId());
+        //判断该订单是否存在
+        if(order == null){
+            logger.info("{}==>订单不存在 ",orderStateDto.getOrderId());
+        }
+
+        //如果订单存在，修改订单状态，
+        order.setState(orderStateDto.getState());
+        orderMapper.updateByPrimaryKeySelective(order);
+
+
+        //新增订单操作员
+        //判断订单操作员ID是否为Null，
+        //如果不为null说明操作员领取任务，进行添加订单操作员
+        //若果为null说明完成订单，
+
+        if(orderStateDto.getEmployeeId() != null){
+
+            OrderEmployee orderEmployee = new OrderEmployee();
+
+            orderEmployee.setEmployeeId(orderStateDto.getEmployeeId());
+            orderEmployee.setOrderId(orderStateDto.getOrderId());
+            orderEmployeeMapper.insertSelective(orderEmployee);
+        }
+
+
     }
 
     /*==========================维修组===================================*/
+
+    public  void sendOrderInfoToMq(Integer id){
+        //获取订单的详细信息
+        Order order = orderMapper.findOrderWithCustomerById(id);
+        //获取订单的服务信息
+        ServiceType serviceType = serviceTypeMapper.selectByPrimaryKey(order.getServiceTypeId());
+        //获取订单配件
+        List<Parts> partsList  =partsMapper.findPartaByOrderId(id);
+
+        for(Parts parts : partsList){
+            System.out.println("配件类型22222"+ parts.getType().getTypeName());
+            System.out.println(parts.getNum());
+        }
+
+
+
+
+        OrderDto orderDto = new OrderDto();
+        orderDto.setOrder(order);
+        orderDto.setServiceType(serviceType);
+        orderDto.setPartsList(partsList);
+
+
+        //封装json
+        String json = new Gson().toJson(orderDto);
+
+        jmsTemplate.send(new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+
+                return session.createTextMessage(json);
+            }
+        });
+
+    }
 
 
 

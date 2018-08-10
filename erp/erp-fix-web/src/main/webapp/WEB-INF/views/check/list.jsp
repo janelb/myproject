@@ -29,7 +29,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                维修部任务领取
+                质检部任务领取
             </h1>
         </section>
 
@@ -37,29 +37,29 @@
         <section class="content">
             <c:forEach items="${page.list}" var="fixOrder">
 
-            <!-- Default box -->
-            <div class="box">
-                <div class="box-body">
-                    <div class="panel panel-info">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading">
-                            <a href="/fix/${fixOrder.orderId}/detail">订单号:${fixOrder.orderId}</a> - ${fixOrder.carType} - ${fixOrder.orderType}
+                <!-- Default box -->
+                <div class="box">
+                    <div class="box-body">
+                        <div class="panel panel-info">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">
+                                <a href="/check/${fixOrder.orderId}/service">订单号:${fixOrder.orderId}</a> - ${fixOrder.carType} - ${fixOrder.orderType}
 
-                            <c:if test="${fixOrder.state == '2'}">
-                            <button rel="${fixOrder.orderId}" class="btn btn-success btn-sm pull-right receiveBtn">任务领取</button> </div>
+                                <c:if test="${fixOrder.state == '4'}">
+                                <button rel="${fixOrder.orderId}" class="btn btn-success btn-sm pull-right receiveBtn">任务领取</button> </div>
                             </c:if>
 
-                        <!-- List group -->
-                        <c:forEach items="${fixOrder.fixOrderPartsList}" var="fixOrderParts">
-                        <ul class="list-group">
-                            <li class="list-group-item">${fixOrderParts.typeName}-${fixOrderParts.partsName} * ${fixOrderParts.partsNum}</li>
-                        </ul>
-                        </c:forEach>
+                            <!-- List group -->
+                            <c:forEach items="${fixOrder.fixOrderPartsList}" var="fixOrderParts">
+                                <ul class="list-group">
+                                    <li class="list-group-item">${fixOrderParts.typeName}-${fixOrderParts.partsName} * ${fixOrderParts.partsNum}</li>
+                                </ul>
+                            </c:forEach>
 
 
+                        </div>
                     </div>
                 </div>
-            </div>
             </c:forEach>
 
 
@@ -81,9 +81,9 @@
             //判断是否已经有任务
             var orderId = $(this).attr("rel");
             layer.confirm("你确定要领取该任务？",function () {
-                $.get("/fix/"+orderId+"/receive",function (res) {
+                $.get("/check/"+orderId+"/receive",function (res) {
                     if(res.state == 'success'){
-                    window.location.href="/fix/"+orderId+"/detail";
+                        window.location.href="/check/"+orderId+"/service";
                     }else{
                         layer.msg(res.message );
                     }

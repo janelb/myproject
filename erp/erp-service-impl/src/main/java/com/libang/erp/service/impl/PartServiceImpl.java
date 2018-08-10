@@ -4,13 +4,16 @@ package com.libang.erp.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import com.libang.erp.entity.Parts;
-import com.libang.erp.entity.Type;
-import com.libang.erp.entity.TypeExample;
+import com.google.gson.Gson;
+import com.libang.erp.entity.*;
 import com.libang.erp.mapper.PartsMapper;
+import com.libang.erp.mapper.PartsStreamMapper;
 import com.libang.erp.mapper.TypeMapper;
 import com.libang.erp.service.PartService;
 import com.libang.erp.util.Constant;
+import com.libang.erp.vo.FixOrderPartsVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +27,15 @@ import java.util.Map;
  */
 @Service
 public class PartServiceImpl implements PartService {
-    /*private Logger logger = LoggerFactory.getLogger(PartServiceImpl.class);*/
+    private Logger logger = LoggerFactory.getLogger(PartServiceImpl.class);
 
     @Autowired
     private PartsMapper partsMapper;
     @Autowired
     private TypeMapper typeMapper;
+
+    @Autowired
+    private PartsStreamMapper partsStreamMapper;
 
     /**
      * 根据id进行查找
@@ -196,6 +202,41 @@ public class PartServiceImpl implements PartService {
         List<Parts> partsList = partsMapper.findPartaByOrderId(id);
 
         return partsList;
+    }
+
+
+
+    /**
+     * 从消息队列中获取数据并解析json数据
+     * 减少库存
+     *
+     * @param json
+     */
+    @Override
+    public void subInventory(String json) {
+            //解析json数据
+        FixOrderPartsVo fixOrderPartsVo = new Gson().fromJson(json,FixOrderPartsVo.class);
+        //根据员工id和配件集合减少库存
+        for(FixOrderParts fixOrderParts : fixOrderPartsVo.getFixOrderPartsList()){
+            Parts parts = partsMapper.selectByPrimaryKey(fixOrderParts.getPartsId());
+            parts.setInventory(parts.getInventory() - fixOrderParts.getPartsNum());
+            partsMapper.updateByPrimaryKeySelective(parts);
+
+            //生成出库流水
+            PartsStream partsStream = new PartsStream();
+            partsStream.setOrderId(fixOrderParts.getOrderId());
+            partsStream.setPartsId(fixOrderParts.getPartsId());
+            partsStream.setEmployeeId(fixOrderPartsVo.getEmployeeId());
+            partsStream.setNum(fixOrderParts.getPartsNum());
+            partsStream.setType(PartsStream.PARTS_STREAM_TYPE_OUT);
+
+            partsStreamMapper.insertSelective(partsStream);
+            logger.info("{}配件出库",partsStream);
+        }
+
+
+
+
     }
 
 

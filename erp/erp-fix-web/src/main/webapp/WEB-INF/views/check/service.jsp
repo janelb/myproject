@@ -34,7 +34,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                项目维修
+                项目质检
             </h1>
         </section>
 
@@ -58,12 +58,12 @@
                         </tr>
                         <tr>
                             <td class="td_title">维修员</td><td>${fixOrder.fixEmployeeName}</td>
+                            <td class="td_title">质检员</td><td>${fixOrder.checkEmployeeName}</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <!-- /.box-body -->
-
             </div>
             <!-- /.box -->
 
@@ -92,29 +92,24 @@
                 </table>
             </div>
             <c:if test="${curr_employee_id == fixOrder.fixEmployeeId}">
-                <c:if test="${fixOrder.state == '3'}">
-                <button class="btn btn-success btn-block btn-lg" id="doneBtn">完成</button>
+                <c:if test="${fixOrder.state == '5'}">
+                    <button class="btn btn-success btn-block btn-lg" id="doneBtn">完成</button>
                 </c:if>
             </c:if>
-
-
         </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
     <%@ include file="../include/footer.jsp" %>
-
-
 </div>
 <!-- ./wrapper -->
-
 <%@ include file="../include/js.jsp" %>
 <script>
     $(function(){
         $("#doneBtn").click(function(){
-            layer.confirm("确定已完成所有维修工作？", function(){
-                window.location.href = "/fix/${fixOrder.orderId}/done";
+            layer.confirm("确定已完成所有质检工作？", function(){
+                window.location.href = "/check/${fixOrder.orderId}/done";
             });
         })
     })

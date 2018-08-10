@@ -28,7 +28,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>汽车接待服务平台</b></a>
+        <a href="../../index2.html"><b>汽车维修-质检平台</b></a>
     </div>
     <!-- /.login-logo -->
 

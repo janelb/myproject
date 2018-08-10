@@ -96,4 +96,11 @@ public interface PartService {
      * @return
      */
     List<Parts> findPartsByOrderId(Integer id);
+
+    /**
+     *
+     * 从消息队列中获取数据并解析json数据
+     * @param json
+     */
+    void subInventory(String json);
 }
