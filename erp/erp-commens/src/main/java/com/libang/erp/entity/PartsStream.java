@@ -43,6 +43,10 @@ public class PartsStream implements Serializable {
      */
     private Date createTime;
 
+    private Parts parts;
+
+    private Employee employee;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -99,5 +103,36 @@ public class PartsStream implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Parts getParts() {
+        return parts;
+    }
+
+    public void setParts(Parts parts) {
+        this.parts = parts;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    @Override
+    public String toString() {
+        return "PartsStream{" +
+                "id=" + id +
+                ", orderId=" + orderId +
+                ", partsId=" + partsId +
+                ", num=" + num +
+                ", employeeId=" + employeeId +
+                ", type=" + type +
+                ", createTime=" + createTime +
+                ", parts=" + parts +
+                ", employee=" + employee +
+                '}';
     }
 }

@@ -41,7 +41,7 @@ public class CustomerFilterChainDefinition {
     }
 
     /**
-     * 跟新权限
+     * 更新权限
      */
     public synchronized void updatePermission(){
 
@@ -69,7 +69,7 @@ public class CustomerFilterChainDefinition {
         for(Ini.Section.Entry<String ,String> entry : section.entrySet()){
 
             defaultFilterChainManager.createChain(entry.getKey(),entry.getValue());
-}
+        }
     }
 
 

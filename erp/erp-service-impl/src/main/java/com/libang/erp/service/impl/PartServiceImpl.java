@@ -6,16 +6,20 @@ import com.github.pagehelper.PageInfo;
 
 import com.google.gson.Gson;
 import com.libang.erp.entity.*;
+import com.libang.erp.mapper.PartsInMapper;
 import com.libang.erp.mapper.PartsMapper;
 import com.libang.erp.mapper.PartsStreamMapper;
 import com.libang.erp.mapper.TypeMapper;
 import com.libang.erp.service.PartService;
 import com.libang.erp.util.Constant;
 import com.libang.erp.vo.FixOrderPartsVo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -36,6 +40,9 @@ public class PartServiceImpl implements PartService {
 
     @Autowired
     private PartsStreamMapper partsStreamMapper;
+
+    @Autowired
+    private PartsInMapper partsInMapper;
 
     /**
      * 根据id进行查找
@@ -121,27 +128,58 @@ public class PartServiceImpl implements PartService {
     }
 
     /**
-     * 新增配件类型
+     * 新增配件
      *
      * @param parts
      */
     @Override
+    @Transactional(rollbackFor = RuntimeException.class)
     public void save(Parts parts) {
+        Subject subject = SecurityUtils.getSubject();
+        Employee employee = (Employee) subject.getPrincipal();
+
         partsMapper.insertSelective(parts);
         int id = parts.getId();
+
+        //  配件入库记录入库流水
+        PartsIn partsIn  = new PartsIn();
+        partsIn.setPartsId(parts.getId());
+        partsIn.setEmployeeId(employee.getId());
+        partsIn.setNum(parts.getInventory());
+
+        partsInMapper.insertSelective(partsIn);
+
 
       /*  logger.debug("新增配件:{}",id);*/
 
     }
 
     /**
-     * 跟新
-     *
+     * 更新
      * @param parts
      */
     @Override
+    @Transactional(rollbackFor = RuntimeException.class)
     public void edit(Parts parts) {
         partsMapper.updateByPrimaryKeySelective(parts);
+
+        Subject subject = SecurityUtils.getSubject();
+        Employee employee = (Employee) subject.getPrincipal();
+        //根据配件id在数据库查询更改前的数量
+        Parts parts1 = partsMapper.selectByPrimaryKey(parts.getId());
+
+        //跟新配件流水
+        PartsIn partsIn  = new PartsIn();
+        partsIn.setPartsId(parts.getId());
+        partsIn.setEmployeeId(employee.getId());
+
+        //如果配件数量发生更改，更改后的数量-更改前的数量=变化的数量
+        //如果为正则说明添加配件，如果负数说明减少该配件
+        partsIn.setNum(parts.getInventory() -  parts1.getInventory());
+
+        partsInMapper.insertSelective(partsIn);
+
+
     }
 
     /**

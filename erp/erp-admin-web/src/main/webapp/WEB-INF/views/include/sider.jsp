@@ -49,7 +49,7 @@
                     <li><a href="/type"><i class="fa fa-circle-o"></i>类型管理</a></li>
                     <li><a href="/parts/new"><i class="fa fa-circle-o"></i>配件入库</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i>入库查询</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i>出库查询</a></li>
+                    <li><a href="/parts/out"><i class="fa fa-circle-o"></i>出库查询</a></li>
                 </ul>
             </li>>
             <!-- 结算管理 -->

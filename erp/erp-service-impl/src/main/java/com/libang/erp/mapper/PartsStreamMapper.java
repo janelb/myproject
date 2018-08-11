@@ -1,8 +1,11 @@
 package com.libang.erp.mapper;
 
+import com.github.pagehelper.PageInfo;
 import com.libang.erp.entity.PartsStream;
 import com.libang.erp.entity.PartsStreamExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface PartsStreamMapper {
@@ -27,4 +30,7 @@ public interface PartsStreamMapper {
     int updateByPrimaryKeySelective(PartsStream record);
 
     int updateByPrimaryKey(PartsStream record);
+
+
+    List<PartsStream> findPartsOutInventory(Map<String,Object> queryMap);
 }

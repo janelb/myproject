@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:deubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+        <!--服务器名称自定义-->
+    <dubbo:application name="ProductServiceConsumer"/>
+    <!--dubbo协议端口号-->
+    <dubbo:registry address="zookeeper://192.168.229.1:2181"/>
+    <!--接受消息服务--><!--生成远程服务代理，可以和本地的bean一样使用productService-->
+    <dubbo:reference interface="com.libang.dubbo.ProductService" id="productService"/>
+
+
+    
+</beans>
