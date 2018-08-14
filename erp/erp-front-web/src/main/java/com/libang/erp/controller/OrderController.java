@@ -35,8 +35,8 @@ import java.util.Map;
 @RequestMapping("/order")
 @Controller
 public class OrderController {
-    @Autowired
-    private JmsTemplate jmsTemplate;
+   /* @Autowired
+    private JmsTemplate jmsTemplate;*/
 
     @Autowired
     private OrderService orderService;

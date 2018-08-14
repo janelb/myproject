@@ -1,72 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx.xsd">
-
-    <!--开启扫描器-->
-    <context:component-scan base-package="com.libang.erp">
-        <!--不包含Controller注解，与springmvc-servlet.xml相反-->
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
-
-    <!--加载数据库配置-->
-    <context:property-placeholder location="classpath:config.properties"/>
-    <!--加载数据库连接-->
-    <bean id="datasource" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="${jdbc.driver}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-    </bean>
-    <!--配置事务管理器-->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="datasource"/>
-    </bean>
-    <!--开启基于注解的事务-->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <!--mybatis-->
-    <!--获取SQLSessionFactory-->
-    <bean id="sqlSessionfactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <!--获取数据源-->
-        <property name="dataSource" ref="datasource"/>
-        <!--类的别名-->
-        <property name="typeAliasesPackage" value="com.libang.erp.entity"/>
-        <!--mapper文件的位置-->
-        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
-        <!--其他配置-->
-        <property name="configuration">
-            <bean class="org.apache.ibatis.session.Configuration">
-                <property name="mapUnderscoreToCamelCase" value="true"/>
-            </bean>
-        </property>
-
-        <property name="plugins">
-            <array>
-                <bean class="com.github.pagehelper.PageInterceptor">
-                    <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
-                    <property name="properties">
-                        <value>
-                            helperDialect=mysql
-
-                        </value>
-                    </property>
-                </bean>
-            </array>
-        </property>
-
-
-
-
-    </bean>
-    <!--mapper自动扫描，动态产生实现类对象，并放入spring容器中-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.libang.erp.mapper"/>
-    </bean>
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+        <!--导入spring配置文件-->
+        <import resource="classpath:spring-context.xml"/>
+        <import resource="classpath:spring-dubbo.xml"/>
+        <import resource="classpath:spring-jms.xml"/>
 </beans>

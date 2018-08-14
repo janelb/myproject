@@ -5,7 +5,7 @@ import com.libang.erp.entity.Car;
 import com.libang.erp.entity.Customer;
 import com.libang.erp.exception.ServiceException;
 import com.libang.erp.service.CarService;
-import com.libang.erp.service.CustomerService;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,8 +26,6 @@ public class CarController {
     @Autowired
     private CarService carService;
 
-    @Autowired
-    private CustomerService customerService;
 
 
     /*新增车辆信息*/

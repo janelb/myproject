@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+        <!--配置服务器名称-->
+    <dubbo:application name="ErpServiceImpl"/>
+    <!--配置注册中心的名称-->
+    <!--<dubbo:registry address="zookeeper://192.168.229.128:2181"/>-->
+    <dubbo:registry address="zookeeper://192.168.1.167:2181"/>
+   <!-- 指定协议端口-->
+    <!--<dubbo:protocol host="192.168.229.129" port="20880"/>-->
+    <dubbo:protocol host="192.168.1.168" port="20880"/>
+    <!--<dubbo:protocol host="192.168.1.166" port="20880"/>-->
+    <!--注入服务bean-->
+    <bean id="carService" class="com.libang.erp.service.impl.CarServiceImpl"/>
+    <bean id="employeeService" class="com.libang.erp.service.impl.EmployeeServiceImpl"/>
+    <bean id="fixOrderService" class="com.libang.erp.service.impl.FixOrderServiceImpl"/>
+    <bean id="orderService" class="com.libang.erp.service.impl.OrderServiceImpl"/>
+    <bean id="partService" class="com.libang.erp.service.impl.PartServiceImpl"/>
+    <bean id="partsStreamService" class="com.libang.erp.service.impl.PartsStreamServiceImpl"/>
+    <bean id="roleEmployeeService" class="com.libang.erp.service.impl.RoleEmployeeServiceImpl"/>
+    <bean id="rolesPermissionService" class="com.libang.erp.service.impl.RolesPermissionServiceImpl"/>
+    <bean id="typeService" class="com.libang.erp.service.impl.TypeServiceImpl"/>
+    <!--暴露服务-->
+    <dubbo:service interface="com.libang.erp.service.CarService" ref="carService"/>
+    <dubbo:service interface="com.libang.erp.service.EmployeeService" ref="employeeService"/>
+    <dubbo:service interface="com.libang.erp.service.FixOrderService" ref="fixOrderService"/>
+    <dubbo:service interface="com.libang.erp.service.OrderService" ref="orderService"/>
+    <dubbo:service interface="com.libang.erp.service.PartService" ref="partService"/>
+    <dubbo:service interface="com.libang.erp.service.PartsStreamService" ref="partsStreamService"/>
+    <dubbo:service interface="com.libang.erp.service.RoleEmployeeService" ref="roleEmployeeService"/>
+    <dubbo:service interface="com.libang.erp.service.RolesPermissionService" ref="rolesPermissionService"/>
+    <dubbo:service interface="com.libang.erp.service.TypeService" ref="typeService"/>
+</beans>
