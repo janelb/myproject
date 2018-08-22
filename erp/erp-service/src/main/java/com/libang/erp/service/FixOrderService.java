@@ -60,4 +60,11 @@ public interface FixOrderService {
      * @param id
      */
     void taskDoneCheck(Integer id);
+
+    /**
+     *
+     * 记录订单超时次数
+     * @param jobName
+     */
+    void addOrderTimeOut(String jobName);
 }

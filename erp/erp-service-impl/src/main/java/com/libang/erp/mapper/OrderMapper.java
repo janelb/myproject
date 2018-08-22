@@ -46,4 +46,12 @@ public interface OrderMapper {
      * @return
      */
     List<Type> findTypeByOrderId(Integer id);
+
+    /**
+     * 根据时间和订单状态查找订单
+     * @param state
+     * @param dateTime
+     * @return
+     */
+    List<Order> findDatilOrderByStateAndDateTime(@Param("state") String state, @Param("dateTime") String dateTime);
 }

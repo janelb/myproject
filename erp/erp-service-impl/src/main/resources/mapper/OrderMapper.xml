@@ -190,13 +190,13 @@
       <result property="customerId" column="customer_id"/>
       <result property="color" column="color"/>
     </association>
-    <association property="car.customer" javaType="customer">
-      <id property="id" column="customer_id"/>
-      <result property="userName" column="user_name"/>
-      <result property="idCard" column="id_card"/>
-      <result property="tel" column="tel"/>
-      <result property="createTime" column="create_time"/>
-    </association>
+      <association property="car.customer" javaType="com.libang.erp.entity.Customer">
+        <id property="id" column="customer_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="idCard" column="id_card"/>
+        <result property="tel" column="tel"/>
+        <result property="createTime" column="create_time"/>
+      </association>
   </resultMap>
 
 
@@ -269,8 +269,21 @@
 
     </select>
 
+  <!--根据时间查找前一天已完成的订单-->
+  <select id="findDatilOrderByStateAndDateTime" resultType="com.libang.erp.entity.Order">
+                   SELECT
+                          *
+                      FROM
+                          `order`
+                      WHERE
+                          `order`.state = #{state}
+                      AND DATE(`order`.create_time) = #{dateTime}
 
-    <resultMap id="orderMapWithDetail" type="com.libang.erp.entity.Order" extends="BaseResultMap">
+
+  </select>
+
+
+  <resultMap id="orderMapWithDetail" type="com.libang.erp.entity.Order" extends="BaseResultMap">
       <association property="car" javaType="com.libang.erp.entity.Car">
         <id property="id" column="car_id"/>
         <result property="carType" column="car_type"/>

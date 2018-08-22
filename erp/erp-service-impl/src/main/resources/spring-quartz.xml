@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+    <!--定义调用的对象和方法-->
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <!--手否固定重复的任务-->
+        <property name="durability" value="true"/>
+        <!--任务的实现类-->
+        <property name="jobClass" value="com.libang.erp.springQuartz.CountDetil"/>
+    </bean>
+    <!--定义Tigger-->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobDetail"/>
+        <property name="cronExpression" value="1 10 13 * * ? *"/>
+    </bean>
+
+    <!--定义调度器-->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+        <!--配置数据库连接池-->
+        <property name="dataSource" ref="datasource"/>
+        <!--事务管理器-->
+        <property name="transactionManager" ref="transactionManager"/>
+        <!--获取配置文件-->
+        <property name="configLocation" value="classpath:quartz.properties"/>
+        <!--任务执行后是否保留，默认是false-->
+        <property name="overwriteExistingJobs" value="true"/>
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+
+
 
 </beans>

@@ -3,4 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!--注入线程池-->
+        <bean id="taskScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+            <!--线程池大小-->
+            <property name="poolSize" value="10"/>
+            <!--线程名称的前缀-->
+            <property name="threadNamePrefix" value="task-scheduler"/>
+        </bean>
+
 </beans>

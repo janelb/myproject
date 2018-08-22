@@ -3,4 +3,66 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
+    <!--配置Redis的连接池配置-->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxWaitMillis" value="5000"/>
+        <property name="maxTotal" value="30"/>
+        <property name="minIdle" value="5"/>
+        <property name="maxIdle" value="10"/>
+    </bean>
+
+  <!--集群配置-->
+    <bean id="clusterConfiguration" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
+        <property name="clusterNodes">
+            <list>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.1.166"/>
+                    <constructor-arg name="port" value="6000"/>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.1.166"/>
+                    <constructor-arg name="port" value="6001"/>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.1.166"/>
+                    <constructor-arg name="port" value="6002"/>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.1.166"/>
+                    <constructor-arg name="port" value="6003"/>
+                </bean>
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.1.166"/>
+                    <constructor-arg name="port" value="6004"/>
+                </bean>
+
+                <bean class="org.springframework.data.redis.connection.RedisNode">
+                    <constructor-arg name="host" value="192.168.1.166"/>
+                    <constructor-arg name="port" value="6005"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+
+
+    <!--配置连接工厂-->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+      <!--  <property name="hostName" value="172.16.7.70"/>
+        <property name="port" value="6379"/>-->
+        <constructor-arg name="clusterConfig" ref="clusterConfiguration"/>
+
+        <!--是否使用连接池-->
+        <property name="usePool" value="true"/>
+        <property name="poolConfig" ref="jedisPoolConfig"/>
+    </bean>
+
+    <!--配置RedisTemplate-->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+        <!--是否支持事务-->
+        <property name="enableTransactionSupport" value="true"/>
+    </bean>
+
 </beans>

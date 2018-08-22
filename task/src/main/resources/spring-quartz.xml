@@ -3,8 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--定义任务类-->
-    <bean id="mySpringQuartzJob" class="com.libang.springQuartz.MySpringQuratzJob"/>
+    <!--定义任务类放入Spring容器-->
+    <bean id="mySpringQuartzJob" class="com.libang.springQuartz.MySpringQuartzJob"/>
+
     <!--定义调度对象和方法-->
     <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="mySpringQuartzJob"/>
@@ -12,8 +13,8 @@
     </bean>
     <!--定义Trigger-->
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail" value="jobDetail"/>
-        <property name="cronExpression" value="0/4 * * * *"/>
+        <property name="jobDetail" ref="jobDetail"/>
+        <property name="cronExpression" value="0/4 * * * * ?"/>
     </bean>
 
     <!--调度器-->
@@ -24,7 +25,5 @@
             </list>
         </property>
     </bean>
-
-
 
 </beans>

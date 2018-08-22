@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--配置数据源-->
+    <bean id="datasource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql:///car"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+    <!--配置事务-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+    <!--开启基于注解的事务-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    
+    <!--定义调度器工厂-->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <!--获取数据源-->
+        <property name="dataSource" ref="datasource"/>
+        <!--事务管理器-->
+        <property name="transactionManager" ref="transactionManager"/>
+        <!--获取配置文件-->
+        <property name="configLocation" value="classpath:config/quartz.properties"/>
+        <!--任务重复时是否进行覆盖-->
+        <property name="overwriteExistingJobs" value="true"/>
+    </bean>
+
+
+
 
 </beans>

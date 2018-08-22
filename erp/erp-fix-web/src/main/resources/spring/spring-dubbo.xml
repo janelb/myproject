@@ -6,7 +6,7 @@
     <!--配置服务器名称-->
     <dubbo:application name="ErpAdminWeb"/>
     <!--配置服务器地址-->
-    <dubbo:registry address="zookeeper://192.168.1.167:2181"/>
+    <dubbo:registry address="zookeeper://192.168.1.169:2181;zookeeper://192.168.1.169:2182;zookeeper://192.168.1.169:2183"/>
     <dubbo:reference interface="com.libang.erp.service.RolesPermissionService" id="rolesPermissionService" timeout="5000"/>
     <dubbo:reference interface="com.libang.erp.service.RoleEmployeeService" id="roleEmployeeService" timeout="5000"/>
     <dubbo:reference interface="com.libang.erp.service.EmployeeService" id="employeeService" timeout="5000"/>
